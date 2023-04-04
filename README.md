@@ -1,58 +1,104 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10596246&assignment_repo_type=AssignmentRepo)
-<div align="center">
+# ChatGPT Discord Bot
 
-# Project Name
-[![Report Issue on Jira](https://img.shields.io/badge/Report%20Issues-Jira-0052CC?style=flat&logo=jira-software)](https://temple-cis-projects-in-cs.atlassian.net/jira/software/c/projects/DT/issues)
-[![Deploy Docs](https://github.com/ApplebaumIan/tu-cis-4398-docs-template/actions/workflows/deploy.yml/badge.svg)](https://github.com/ApplebaumIan/tu-cis-4398-docs-template/actions/workflows/deploy.yml)
-[![Documentation Website Link](https://img.shields.io/badge/-Documentation%20Website-brightgreen)](https://applebaumian.github.io/tu-cis-4398-docs-template/)
+> ### Build your own Discord bot using ChatGPT
+---
+> **Warning**
+>
+> #### 2023-02-10 Update: ChatGPT model but requires payment
+> #### 2023-02-08 Update: ChatGPT API is highly unstable now
+> #### 2023-02-03 Update: ChatGPT API working again
+> #### 2023-02-02 Update: OpenAI has closed ChatGPT API, temporarily switching to using GPT-3 model
+> #### 2023-02-01 Update: Now using the official ChatGPT API
 
+## Features
 
-</div>
+* `/chat [message]` Chat with ChatGPT!
+* `/private` ChatGPT switch to private mode
+* `/public`  ChatGPT switch to public  mode
+* `/replyall`  ChatGPT switch between replyall mode and default mode
+* `/reset` Clear ChatGPT conversation history
 
+### Chat
 
-## Keywords
+![image](https://user-images.githubusercontent.com/89479282/206497774-47d960cd-1aeb-4fba-9af5-1f9d6ff41f00.gif)
 
-Section #, as well as any words that quickly give your peers insights into the application like programming language, development platform, type of application, etc.
+### Mode
 
-## Project Abstract
+* `public mode (default)`  the bot directly reply on the channel
 
-This document proposes a novel application of a text message (SMS or Email) read-out and hands-free call interacted between an Android Smartphone and an infotainment platform (headunit) in a car environment. When a phone receives an SMS or Email, the text message is transferred from the phone to the headunit through a Bluetooth connection. On the headunit, user can control which and when the received SMS or E-mail to be read out through the in-vehicle audio system. The user may press one button on the headunit to activate the hands-free feature to call back the SMS sender.
+  ![image](https://user-images.githubusercontent.com/89479282/206565977-d7c5d405-fdb4-4202-bbdd-715b7c8e8415.gif)
 
-## High Level Requirement
+* `private mode` the bot's reply can only be seen by the person who used the command
 
-Describe the requirements – i.e., what the product does and how it does it from a user point of view – at a high level.
+  ![image](https://user-images.githubusercontent.com/89479282/206565873-b181e600-e793-4a94-a978-47f806b986da.gif)
 
-## Conceptual Design
+* `replyall mode` the bot will reply to all messages in the server without using slash commands
 
-Describe the initial design concept: Hardware/software architecture, programming language, operating system, etc.
+   > **Warning**
+   > The bot will easily be triggered in `replyall` mode, which could cause program failures
 
-## Background
+# Setup
 
-The background will contain a more detailed description of the product and a comparison to existing similar projects/products. A literature search should be conducted and the results listed. Proper citation of sources is required. If there are similar open-source products, you should state whether existing source will be used and to what extent. If there are similar closed-source/proprietary products, you should state how the proposed product will be similar and different.
+## Install
 
-## Required Resources
+1. `pip install -r requirements.txt`
+2. **Rename the file `.env.dev` to `.env`**
 
-Discuss what you need to develop this project. This includes background information you will need to acquire, hardware resources, and software resources. If these are not part of the standard Computer Science Department lab resources, these must be identified early and discussed with the instructor.
+## Step 1: Create a Discord bot
 
-## Collaborators
+1. Go to https://discord.com/developers/applications create an application
+2. Build a Discord bot under the application
+3. Get the token from bot setting
 
-[//]: # ( readme: collaborators -start )
-<table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/ApplebaumIan">
-            <img src="https://avatars.githubusercontent.com/u/9451941?v=4" width="100;" alt="ApplebaumIan"/>
-            <br />
-            <sub><b>Ian Tyler Applebaum</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/leighflagg">
-            <img src="https://avatars.githubusercontent.com/u/77810293?v=4" width="100;" alt="leighflagg"/>
-            <br />
-            <sub><b>Null</b></sub>
-        </a>
-    </td></tr>
-</table>
+   ![image](https://user-images.githubusercontent.com/89479282/205949161-4b508c6d-19a7-49b6-b8ed-7525ddbef430.png)
+4. Store the token to `.env` under the `DISCORD_BOT_TOKEN`
 
-[//]: # ( readme: collaborators -end )
+   ![image](https://user-images.githubusercontent.com/89479282/217743218-26e3d999-44d5-4a0b-88e1-ee23f3ffd5d8.png)
+   
+5. Turn MESSAGE CONTENT INTENT `ON`
+
+   ![image](https://user-images.githubusercontent.com/89479282/205949323-4354bd7d-9bb9-4f4b-a87e-deb9933a89b5.png)
+   
+6. Invite your bot to your server via OAuth2 URL Generator
+
+   ![image](https://user-images.githubusercontent.com/89479282/205949600-0c7ddb40-7e82-47a0-b59a-b089f929d177.png)
+
+## Step 2: Generate a OpenAI API key
+
+1. Go to https://beta.openai.com/account/api-keys
+
+2. Click Create new secret key
+
+   ![image](https://user-images.githubusercontent.com/89479282/207970699-2e0cb671-8636-4e27-b1f3-b75d6db9b57e.PNG)
+
+2. Store the SECRET KEY to `.env` under the `OPENAI_KEY`
+
+## Step 3: Run the bot on the desktop
+1. Open a terminal or command prompt
+2. Navigate to the directory where you installed the ChatGPT Discord bot
+3. Run `python3 main.py` to start the bot
+
+## Step 3: Run the bot with Docker
+
+1. Build the Docker image & Run the Docker container `docker compose up -d`
+2. Inspect whether the bot works well `docker logs -t chatgpt-discord-bot`
+
+   ### Stop the bot:
+
+   * `docker ps` to see the list of running services
+   * `docker stop <BOT CONTAINER ID>` to stop the running bot
+
+### Have a good chat!
+
+## Optional: Setup starting prompt
+
+* A starting prompt would be invoked when the bot is first started or reset
+* You can set it up by modifying the content in `starting-prompt.txt`
+* All the text in the file will be fired as a prompt to the bot  
+* Get the first message from ChatGPT in your discord channel!
+
+   1. Right-click the channel you want to recieve the message, `Copy  ID`
+   
+        ![channel-id](https://user-images.githubusercontent.com/89479282/207697217-e03357b3-3b3d-44d0-b880-163217ed4a49.PNG)
+    
+   2. paste it into `.env` under `DISCORD_CHANNEL_ID`
