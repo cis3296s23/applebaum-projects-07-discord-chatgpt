@@ -148,3 +148,5 @@ openai.error.RateLimitError: That model is currently overloaded with other reque
 [30;1m2023-03-28 16:33:16[0m [34;1mINFO    [0m [35msrc.bot[0m -> ChatGPT Bot#7811 is now running!
 [30;1m2023-03-28 23:56:03[0m [34;1mINFO    [0m [35msrc.bot[0m -> No Channel selected. Skip sending starting prompt.
 [30;1m2023-03-28 23:56:04[0m [34;1mINFO    [0m [35msrc.bot[0m -> ChatGPT Bot#7811 is now running!
+[30;1m2023-04-05 13:24:50[0m [34;1mINFO    [0m [35msrc.bot[0m -> No Channel selected. Skip sending starting prompt.
+[30;1m2023-04-05 13:24:50[0m [34;1mINFO    [0m [35msrc.bot[0m -> ChatGPT Bot#7811 is now running!
