@@ -9,5 +9,4 @@
 .env.production.local
 
 .env
-
 *.log
