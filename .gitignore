@@ -8,5 +8,9 @@
 .env.test.local
 .env.production.local
 
-.env
-*.log
+.env # Tokens
+!.gitignore # Exception for this file
+
+*.log # Do not commit log files
+
+
