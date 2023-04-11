@@ -12,5 +12,4 @@
 !.gitignore # Exception for this file
 
 *.log # Do not commit log files
-
-
+src/__pycache__
