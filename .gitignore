@@ -8,8 +8,10 @@
 .env.test.local
 .env.production.local
 
-.env # Tokens
-!.gitignore # Exception for this file
+# Tokens
+.env
 
-*.log # Do not commit log files
+# Do not commit log files
+*.log
+
 src/__pycache__
