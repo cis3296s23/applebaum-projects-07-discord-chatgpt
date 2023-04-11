@@ -8,11 +8,10 @@ from revChatGPT.V3 import Chatbot
 logger = log.setup_logger(__name__)
 load_dotenv()
 
-
 class Client(discord.Client):
     def __init__(self) -> None:
         config_dir = os.path.abspath(f"{__file__}/../../")
-        prompt_name = 'system_prompt.txt'
+        prompt_name = 'system-prompt.txt'
         prompt_path = os.path.join(config_dir, prompt_name)
         with open(prompt_path, "r", encoding="utf-8") as f:
             self.prompt = f.read()
@@ -27,9 +26,7 @@ class Client(discord.Client):
         self.is_replying_all = os.getenv("REPLYING_ALL")
         self.replying_all_discord_channel_id = os.getenv("REPLYING_ALL_DISCORD_CHANNEL_ID")
         self.openAI_API_key = os.getenv("OPENAI_API_KEY")
-        self.openAI_gpt_engine = os.getenv("GPT_ENGINE")
-        self.chatgpt_session_token = os.getenv("SESSION_TOKEN")
-        self.chatgpt_access_token = os.getenv("ACCESS_TOKEN")
+        self.openAI_gpt_engine = os.getenv("ENGINE")
         self.chatbot = self.get_chatbot_model()
 
     async def send_message(self, message, user_message):
@@ -37,10 +34,10 @@ class Client(discord.Client):
             author = message.user.id
             await message.response.defer(ephemeral=self.isPrivate)
         else:
-            author = message.author.id
+            author = message.channel.id
         try:
             response = (f'> **{user_message}** - <@{str(author)}' + '> \n\n')
-            response = f"{response}{await responses.handle_response(user_message)}"
+            response = f"{response}{await responses.handle_response(user_message, self)}"
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
@@ -65,7 +62,7 @@ class Client(discord.Client):
         import os.path
 
         config_dir = os.path.abspath(f"{__file__}/../../")
-        prompt_name = 'starting-prompt.txt'
+        prompt_name = 'system-prompt.txt'
         prompt_path = os.path.join(config_dir, prompt_name)
         discord_channel_id = os.getenv("DISCORD_CHANNEL_ID")
         try:
@@ -75,7 +72,7 @@ class Client(discord.Client):
                     if discord_channel_id:
                         logger.info(f"Send system prompt with size {len(prompt)}")
                         response = ""
-                        response = f"{response}{await responses.handle_response(prompt)}"
+                        response = f"{response}{await responses.handle_response(prompt, self)}"
                         channel = self.get_channel(int(discord_channel_id))
                         await channel.send(response)
                         logger.info(f"System prompt response:{response}")
