@@ -14,4 +14,4 @@
 # Do not commit log files
 *.log
 
-src/__pycache__
+chatd&d/src/__pycache__
