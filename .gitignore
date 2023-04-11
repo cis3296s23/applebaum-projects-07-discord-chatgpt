@@ -18,3 +18,5 @@ src/__pycache__
 
 # Virtual Environment
 venv
+
+.idea

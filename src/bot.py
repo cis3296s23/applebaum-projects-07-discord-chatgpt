@@ -1,22 +1,12 @@
-import discord
 import os
+import discord
+import openai
+from random import randrange
+from src.client import client
 from discord import app_commands
-from src import responses
-from src import log
+from src import log, responses
 
 logger = log.setup_logger(__name__)
-
-isPrivate = False
-isReplyAll = False
-
-class aclient(discord.Client):
-    def __init__(self) -> None:
-        intents = discord.Intents.default()
-        intents.message_content = True
-        super().__init__(intents=intents)
-        self.tree = app_commands.CommandTree(self)
-        self.activity = discord.Activity(type=discord.ActivityType.watching, name="/chat | /help")
-
 
 async def send_message(message, user_message):
     global isReplyAll
@@ -118,18 +108,16 @@ async def send_start_prompt(client):
 
 
 def run_discord_bot():
-    client = aclient()
 
     @client.event
     async def on_ready():
-        await send_start_prompt(client)
+        await client.send_start_prompt()
         await client.tree.sync()
         logger.info(f'{client.user} is now running!')
 
     @client.tree.command(name="chat", description="Have a chat with ChatGPT")
     async def chat(interaction: discord.Interaction, *, message: str):
-        global isReplyAll
-        if isReplyAll:
+        if client.is_replying_all == "True":
             await interaction.response.defer(ephemeral=False)
             await interaction.followup.send(
                 "> **Warn: You already on replyAll mode. If you want to use slash command, switch to normal mode, use `/replyall` again**")
@@ -138,18 +126,16 @@ def run_discord_bot():
         if interaction.user == client.user:
             return
         username = str(interaction.user)
-        user_message = message
         channel = str(interaction.channel)
         logger.info(
-            f"\x1b[31m{username}\x1b[0m : '{user_message}' ({channel})")
-        await send_message(interaction, user_message)
+            f"\x1b[31m{username}\x1b[0m : '{message}' ({channel})")
+        await send_message(interaction, message)
 
     @client.tree.command(name="private", description="Toggle private access")
     async def private(interaction: discord.Interaction):
-        global isPrivate
         await interaction.response.defer(ephemeral=False)
-        if not isPrivate:
-            isPrivate = not isPrivate
+        if not client.isPrivate:
+            client.isPrivate = not client.isPrivate
             logger.warning("\x1b[31mSwitch to private mode\x1b[0m")
             await interaction.followup.send(
                 "> **Info: Next, the response will be sent via private message. If you want to switch back to public mode, use `/public`**")
@@ -160,10 +146,9 @@ def run_discord_bot():
 
     @client.tree.command(name="public", description="Toggle public access")
     async def public(interaction: discord.Interaction):
-        global isPrivate
         await interaction.response.defer(ephemeral=False)
-        if isPrivate:
-            isPrivate = not isPrivate
+        if client.isPrivate:
+            client.isPrivate = not client.isPrivate
             await interaction.followup.send(
                 "> **Info: Next, the response will be sent to the channel directly. If you want to switch back to private mode, use `/private`**")
             logger.warning("\x1b[31mSwitch to public mode\x1b[0m")
@@ -174,7 +159,6 @@ def run_discord_bot():
 
     @client.tree.command(name="replyall", description="Toggle replyAll access")
     async def replyall(interaction: discord.Interaction):
-        global isReplyAll
         await interaction.response.defer(ephemeral=False)
         if isReplyAll:
             await interaction.followup.send(
