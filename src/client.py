@@ -3,22 +3,24 @@ import discord
 from src import log, responses
 from dotenv import load_dotenv
 from discord import app_commands
+from revChatGPT.V3 import Chatbot
 
 logger = log.setup_logger(__name__)
 load_dotenv()
 
-# config_dir = os.path.abspath(f"{__file__}/../../")
-# prompt_name = 'system_prompt.txt'
-# prompt_path = os.path.join(config_dir, prompt_name)
-# with open(prompt_path, "r", encoding="utf-8") as f:
-#     prompt = f.read()
-
 
 class Client(discord.Client):
     def __init__(self) -> None:
+        config_dir = os.path.abspath(f"{__file__}/../../")
+        prompt_name = 'system_prompt.txt'
+        prompt_path = os.path.join(config_dir, prompt_name)
+        with open(prompt_path, "r", encoding="utf-8") as f:
+            self.prompt = f.read()
+
         intents = discord.Intents.default()
         intents.message_content = True
         super().__init__(intents=intents)
+
         self.tree = app_commands.CommandTree(self)
         self.activity = discord.Activity(type=discord.ActivityType.listening, name="/chat | /help")
         self.isPrivate = False
@@ -28,7 +30,7 @@ class Client(discord.Client):
         self.openAI_gpt_engine = os.getenv("GPT_ENGINE")
         self.chatgpt_session_token = os.getenv("SESSION_TOKEN")
         self.chatgpt_access_token = os.getenv("ACCESS_TOKEN")
-        self.chatgpt_paid = os.getenv("UNOFFICIAL_PAID")
+        self.chatbot = self.get_chatbot_model()
 
     async def send_message(self, message, user_message):
         if self.is_replying_all == "False":
@@ -83,5 +85,9 @@ class Client(discord.Client):
                 logger.info(f"No {prompt_name}. Skip sending system prompt.")
         except Exception as e:
             logger.exception(f"Error while sending system prompt: {e}")
+
+    def get_chatbot_model(self) -> Chatbot:
+        return Chatbot(api_key=self.openAI_API_key, engine=self.openAI_gpt_engine, system_prompt=self.prompt)
+
 
 client = Client()

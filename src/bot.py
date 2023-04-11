@@ -159,32 +159,35 @@ def run_discord_bot():
 
     @client.tree.command(name="replyall", description="Toggle replyAll access")
     async def replyall(interaction: discord.Interaction):
+        client.replying_all_discord_channel_id = str(interaction.channel_id)
         await interaction.response.defer(ephemeral=False)
-        if isReplyAll:
+        if client.is_replying_all == "True":
+            client.is_replying_all = "False"
             await interaction.followup.send(
-                "> **Info: The bot will only response to the slash command `/chat` next. If you want to switch back to replyAll mode, use `/replyAll` again.**")
+                "> **INFO: Next, the bot will response to the Slash Command. If you want to switch back to replyAll mode, use `/replyAll` again**")
             logger.warning("\x1b[31mSwitch to normal mode\x1b[0m")
-        else:
+        elif client.is_replying_all == "False":
+            client.is_replying_all = "True"
             await interaction.followup.send(
-                "> **Info: Next, the bot will response to all message in the server. If you want to switch back to normal mode, use `/replyAll` again.**")
+                "> **INFO: Next, the bot will disable Slash Command and responding to all message in this channel only. If you want to switch back to normal mode, use `/replyAll` again**")
             logger.warning("\x1b[31mSwitch to replyAll mode\x1b[0m")
-        isReplyAll = not isReplyAll
-            
+
+
     @client.tree.command(name="reset", description="Complete reset ChatGPT conversation history")
     async def reset(interaction: discord.Interaction):
-        responses.chatbot.reset()
         await interaction.response.defer(ephemeral=False)
+        client.chatbot = client.get_chatbot_model()
         await interaction.followup.send("> **Info: I have forgotten everything.**")
         logger.warning(
-            "\x1b[31mChatGPT bot has been successfully reset\x1b[0m")
-        await send_start_prompt(client)
-        
+            "\x1b[31mModel has been successfully reset\x1b[0m")
+
     @client.tree.command(name="help", description="Show help for the bot")
     async def help(interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
         await interaction.followup.send(""":star:**BASIC COMMANDS** \n
         - `/chat [message]` Chat with ChatGPT!
         - `/public` ChatGPT switch to public mode 
+        - `/private` ChatGPT switch to private mode
         - `/replyall` ChatGPT switch between replyall mode and default mode
         - `/reset` Clear ChatGPT conversation history\n
         For complete documentation, please visit https://github.com/Zero6992/chatGPT-discord-bot""")
@@ -193,15 +196,16 @@ def run_discord_bot():
 
     @client.event
     async def on_message(message):
-        if isReplyAll:
+        if client.is_replying_all == "True":
             if message.author == client.user:
                 return
-            username = str(message.author)
-            user_message = str(message.content)
-            channel = str(message.channel)
-            logger.info(f"\x1b[31m{username}\x1b[0m : '{user_message}' ({channel})")
-            await send_message(message, user_message)
+            if client.replying_all_discord_channel_id:
+                if message.channel_id == int(client.replying_all_discord_channel_id):
+                    username = str(message.author)
+                    user_message = str(message.content)
+                    channel = str(message.channel)
+                    logger.info(f"\x1b[31m{username}\x1b[0m : '{user_message}' ({channel})")
+                    await client.send_message(message, user_message)
     
     TOKEN = os.getenv("DISCORD_BOT_TOKEN")
-
     client.run(TOKEN)
