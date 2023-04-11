@@ -1,1 +1,1 @@
-Hello world
+Welcome to ChatD&D! Please use /help if you have never used this bot before.
