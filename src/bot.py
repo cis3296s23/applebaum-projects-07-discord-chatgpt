@@ -108,5 +108,5 @@ def run_discord_bot():
                     logger.info(f"\x1b[31m{username}\x1b[0m : '{user_message}' ({channel})")
                     await client.send_message(message, user_message)
     
-    TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+    TOKEN = os.getenv("DISCORD_TOKEN")
     client.run(TOKEN)

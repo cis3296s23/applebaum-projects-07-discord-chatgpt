@@ -24,8 +24,8 @@ class Client(discord.Client):
         self.activity = discord.Activity(type=discord.ActivityType.listening, name="/chat | /help")
         self.isPrivate = False
         self.is_replying_all = os.getenv("REPLYING_ALL")
-        self.replying_all_discord_channel_id = os.getenv("REPLYING_ALL_DISCORD_CHANNEL_ID")
-        self.openAI_API_key = os.getenv("OPENAI_API_KEY")
+        self.replying_all_discord_channel_id = os.getenv("REPLY_ALL_CHANNEL_ID")
+        self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
         self.chatbot = self.get_chatbot_model()
 
