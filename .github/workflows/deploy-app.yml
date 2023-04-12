@@ -47,7 +47,6 @@ jobs:
           password: ${{ secrets.DO_SSH_KEY }}
           script: |
             docker-compose down
-            docker volume rm .env
             docker-compose pull
             docker-compose up
 
