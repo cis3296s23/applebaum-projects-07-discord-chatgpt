@@ -23,16 +23,16 @@ class Client(discord.Client):
         self.tree = app_commands.CommandTree(self)
         self.activity = discord.Activity(type=discord.ActivityType.listening, name="/chat | /help")
         self.isPrivate = False
-        self.is_replying_all = os.getenv("REPLYING_ALL")
+        self.is_replying_all = False
         self.replying_all_discord_channel_id = os.getenv("REPLY_ALL_CHANNEL_ID")
         self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
         self.chatbot = self.get_chatbot_model()
 
-    async def send_message(self, message, user_message):
-        if self.is_replying_all == "False":
+    async def send_message(self, message: discord.Interaction, user_message):
+        if not self.is_replying_all:
             author = message.user.id
-            await message.response.defer(ephemeral=self.isPrivate)
+            await message.response.defer(ephemeral=False)
         else:
             author = message.channel.id
         try:
@@ -43,16 +43,16 @@ class Client(discord.Client):
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
                 response_chunks = [response[i:i + char_limit] for i in range(0, len(response), char_limit)]
                 for chunk in response_chunks:
-                    if self.is_replying_all == "True":
+                    if self.is_replying_all:
                         await message.channel.send(chunk)
                     else:
                         await message.followup.send(chunk)
-            elif self.is_replying_all == "True":
+            elif self.is_replying_all:
                 await message.channel.send(response)
             else:
                 await message.followup.send(response)
         except Exception as e:
-            if self.is_replying_all == "True":
+            if self.is_replying_all:
                 await message.channel.send("> **ERROR: Something went wrong, please try again later!**")
             else:
                 await message.followup.send("> **ERROR: Something went wrong, please try again later!**")

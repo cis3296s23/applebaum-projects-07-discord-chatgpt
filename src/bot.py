@@ -18,8 +18,8 @@ def run_discord_bot():
 
     @client.tree.command(name="chat", description="Have a chat with ChatGPT")
     async def chat(interaction: discord.Interaction, *, message: str):
-        if client.is_replying_all == "True":
-            await interaction.response.defer(ephemeral=False)
+        if client.is_replying_all:
+            await interaction.followup.defer(ephemeral=False)
             await interaction.followup.send(
                 "> **Warn: You already on replyAll mode. If you want to use slash command, switch to normal mode, use `/replyall` again**")
             logger.warning("\x1b[31mYou already on replyAll mode, can't use slash command!\x1b[0m")
@@ -34,7 +34,7 @@ def run_discord_bot():
 
     @client.tree.command(name="private", description="Toggle private access")
     async def private(interaction: discord.Interaction):
-        await interaction.response.defer(ephemeral=False)
+        await interaction.followup.defer(ephemeral=False)
         if not client.isPrivate:
             client.isPrivate = not client.isPrivate
             logger.warning("\x1b[31mSwitch to private mode\x1b[0m")
@@ -62,13 +62,13 @@ def run_discord_bot():
     async def replyall(interaction: discord.Interaction):
         client.replying_all_discord_channel_id = str(interaction.channel_id)
         await interaction.response.defer(ephemeral=False)
-        if client.is_replying_all == "True":
-            client.is_replying_all = "False"
+        if client.is_replying_all:
+            client.is_replying_all = False
             await interaction.followup.send(
                 "> **INFO: Next, the bot will response to the Slash Command. If you want to switch back to replyAll mode, use `/replyAll` again**")
             logger.warning("\x1b[31mSwitch to normal mode\x1b[0m")
-        elif client.is_replying_all == "False":
-            client.is_replying_all = "True"
+        elif not client.is_replying_all:
+            client.is_replying_all = True
             await interaction.followup.send(
                 "> **INFO: Next, the bot will disable Slash Command and responding to all message in this channel only. If you want to switch back to normal mode, use `/replyAll` again**")
             logger.warning("\x1b[31mSwitch to replyAll mode\x1b[0m")
@@ -97,7 +97,7 @@ def run_discord_bot():
 
     @client.event
     async def on_message(message):
-        if client.is_replying_all == "True":
+        if client.is_replying_all:
             if message.author == client.user:
                 return
             if client.replying_all_discord_channel_id:
