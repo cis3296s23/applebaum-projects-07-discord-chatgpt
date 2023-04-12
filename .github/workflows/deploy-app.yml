@@ -1,5 +1,5 @@
-name: 'deploy-app'
-description: 'Builds Docker image, pushes to register, then deploys image into container on remote server when '
+name: Deploy App
+description: 'Builds Docker image, pushes to register, then deploys image into container on remote server when main branch has changes'
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
         run:
           echo DISCORD_TOKEN="${{ secrets.DISCORD_TOKEN }}" >> .env
           echo OPENAI_KEY="${{ secrets.OPENAI_KEY }}" >> .env
-          echo REPLY_ALL_CHANNEL_ID="${{ vari" >> .env
+          echo REPLY_ALL_CHANNEL_ID="${{ env.CHANNEL_ID }}" >> .env
           echo ENGINE="gpt-3.5-turbo" >> .env
           echo REPLYING_ALL="FALSE" >> .env
 
@@ -39,11 +39,16 @@ jobs:
         run: docker push ruuffian/prod:latest
 
       - name: SSH into Digital Ocean VM
-        run:
-          ssh ${{ secrets.DO_USER }}@${{ secrets.DO_IP }}
-
-      - name: Tear down old container
-        run:
+        uses: appleboy/ssh-action@0.1.8
+        with:
+          host: ${{ secrets.DO_IP }}
+          username: ${{ secrets.DO_USER }}
+          password: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            docker-compose down
+            docker volume rm .env
+            docker-compose pull
+            docker-compose up
 
 
 
