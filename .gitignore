@@ -16,5 +16,8 @@
 
 src/__pycache__
 
+# Virtual Environment
 venv
+
 .idea
+.idea/workspace.xml
