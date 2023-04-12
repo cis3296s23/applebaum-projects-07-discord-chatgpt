@@ -194,7 +194,21 @@ def run_discord_bot():
         logger.warning(
             "\x1b[31mChatGPT bot has been successfully reset\x1b[0m")
         await send_start_prompt(client)
-        
+
+    @client.tree.command(name="create", description="Creates the Story by generating the DND campaign")
+    async def create(interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=False)
+        if interaction.user == client.user:
+            return
+        username = str(interaction.user)
+        prompt = "Begin a randomized simple Dungeon & Dragons campaign"
+        channel = str(interaction.channel)
+        logger.info(f"\x1b[31m{username}\x1b[0m : '{prompt}' ({channel})")
+        await send_message(interaction, prompt)
+    
+
+    
+
     @client.tree.command(name="help", description="Show help for the bot")
     async def help(interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
