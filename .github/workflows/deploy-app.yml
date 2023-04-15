@@ -1,10 +1,10 @@
+# Builds Docker image, pushes to register, then deploys image into container on remote server when main branch has changes
+
 name: Deploy App
-description: 'Builds Docker image, pushes to register, then deploys image into container on remote server when main branch has changes'
 
 on:
   push:
-    branches:
-      -main
+    branches: [ "main" ]
 
 jobs:
   build-deploy-main:
