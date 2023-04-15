@@ -41,7 +41,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/chatdd:latest
 
       - name: SSH into Digital Ocean VM
-        uses: appleboy/ssh-action@0.1.8
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.DO_IP }}
           username: ${{ secrets.DO_USER }}
