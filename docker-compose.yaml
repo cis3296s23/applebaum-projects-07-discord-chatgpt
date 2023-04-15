@@ -1,0 +1,8 @@
+services:
+  chatdd:
+    image: ruuffian/chatdd:latest
+    volumes:
+      - logs:/code/logs
+
+volumes:
+  logs:
