@@ -45,7 +45,7 @@ jobs:
         with:
           host: ${{ secrets.DO_IP }}
           username: ${{ secrets.DO_USER }}
-          password: ${{ secrets.DO_SSH_KEY }}
+          key: ${{ secrets.DO_SSH_KEY }}
           script: |
             docker-compose down
             docker-compose pull
