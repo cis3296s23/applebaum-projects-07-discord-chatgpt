@@ -1,6 +1,7 @@
 import os
 import discord
 import openai
+import re
 from random import randrange
 from src.client import client
 from discord import app_commands
@@ -82,11 +83,32 @@ def run_discord_bot():
         logger.warning(
             "\x1b[31mModel has been successfully reset\x1b[0m")
 
+    @client.tree.command(name="roll", description="Roll XdY dice!")
+    async def roll(interaction: discord.Interaction, count: int, sides: int):
+        response = ""
+        if count <= 0 or sides <= 0:
+            response = "Make sure that both count and sides are positive"
+        else:
+            rolls = []
+            for _ in range(count):
+                rolls.append(randrange(1, sides + 1))
+
+            response = "You rolled " + str(count) + "d" + str(sides) + "!\n"
+            for i in range(len(rolls)):
+                response += str(rolls[i])
+                if i < len(rolls) - 1:
+                    response += " + "
+                else:
+                    response += " = " + str(sum(rolls))
+
+        await interaction.response.send_message(response)
+
     @client.tree.command(name="help", description="Show help for the bot")
     async def help(interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
         await interaction.followup.send(""":star:**BASIC COMMANDS** \n
         - `/chat [message]` Chat with ChatGPT!
+        - `/roll [<# of dice>d<# of faces>]` Roll dice! Format as 1d20, 3d6, etc.
         - `/public` ChatGPT switch to public mode 
         - `/private` ChatGPT switch to private mode
         - `/replyall` ChatGPT switch between replyall mode and default mode
