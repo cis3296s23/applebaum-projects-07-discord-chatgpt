@@ -84,43 +84,22 @@ def run_discord_bot():
             "\x1b[31mModel has been successfully reset\x1b[0m")
 
     @client.tree.command(name="roll", description="Roll XdY dice!")
-    async def roll(interaction: discord.Interaction, message: str):
-        tokens = message.split("d")
+    async def roll(interaction: discord.Interaction, count: int, sides: int):
         response = ""
-
-        length = len(tokens)
-        if length < 2:
-            response = "You didn't roll anything"
-        elif length > 2:
-            response = "Wrong format\nFormat is as NdX where N is the number of dice and X is the die rolled"
-            response += "\nMake sure both numbers are greater than 0"
+        if count <= 0 or sides <= 0:
+            response = "Make sure that both count and sides are positive"
         else:
-            try:
-                number = 1
-                if tokens[0] != '':
-                    number = int(tokens[0])
-                dice = int(tokens[1])
+            rolls = []
+            for _ in range(count):
+                rolls.append(randrange(1, sides + 1))
 
-                if number <= 0 or dice <= 0:
-                    response = "Wrong format\nFormat is as NdX where N is the number of dice and X is the die rolled"
-                    response += "\nMake sure both numbers are greater than 0"
-
+            response = "You rolled " + str(count) + "d" + str(sides) + "!\n"
+            for i in range(len(rolls)):
+                response += str(rolls[i])
+                if i < len(rolls) - 1:
+                    response += " + "
                 else:
-                    rolls = []
-                    for _ in range(number):
-                        rolls.append(randrange(1, dice + 1))
-
-                    response = "You rolled " + str(number) + "d" + str(dice) + "!\n"
-                    for i in range(len(rolls)):
-                        response += str(rolls[i])
-                        if i < len(rolls) - 1:
-                            response += " + "
-                        else:
-                            response += " = " + str(sum(rolls))
-
-            except ValueError:
-                response = "Wrong format\nFormat is as NdX where N is the number of dice and X is the die rolled"
-                response += "\nMake sure both numbers are greater than 0"
+                    response += " = " + str(sum(rolls))
 
         await interaction.response.send_message(response)
 
