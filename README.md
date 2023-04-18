@@ -7,6 +7,7 @@
 * `/public`  ChatGPT switch to public  mode
 * `/replyall`  ChatGPT switch between replyall mode and default mode
 * `/reset` Clear ChatGPT conversation history
+* `/roll` Roll XdY dice (X dice, Y sides) for your various DnD needs!
 * `/help`  Show basic info on commands
 
 ### Chat
