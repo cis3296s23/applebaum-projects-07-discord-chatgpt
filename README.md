@@ -39,6 +39,9 @@
 
 ### Have a good chat!
 
+## Getting Started
+// TODO
+
 ## Optional: Setup starting prompt
 
 * A starting prompt would be invoked when the bot is first started or reset
