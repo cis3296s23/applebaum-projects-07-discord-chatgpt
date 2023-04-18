@@ -28,6 +28,7 @@ class Client(discord.Client):
         self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
         self.chatbot = self.get_chatbot_model()
+        self.guild_map = {}
 
     async def send_message(self, message: discord.Interaction, user_message):
         if not self.is_replying_all:
