@@ -59,6 +59,12 @@ def run_discord_bot():
                 "> **Warn: You already on public mode. If you want to switch to private mode, use `/private`**")
             logger.info("You already on public mode!")
 
+    @client.tree.command(name="intialize", description="Initialize your DnD campaign!")
+    async def initialize(interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=False)
+        await interaction.followup.send("Pong!")
+        logger.info("\x1b[31mChatbot initialized\x1b[0m")
+
     @client.tree.command(name="replyall", description="Toggle replyAll access")
     async def replyall(interaction: discord.Interaction):
         client.replying_all_discord_channel_id = str(interaction.channel_id)
