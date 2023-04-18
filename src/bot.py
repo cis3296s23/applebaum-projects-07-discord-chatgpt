@@ -35,7 +35,7 @@ def run_discord_bot():
 
     @client.tree.command(name="private", description="Toggle private access")
     async def private(interaction: discord.Interaction):
-        await interaction.followup.defer(ephemeral=False)
+        await interaction.response.defer(ephemeral=False)
         if not client.isPrivate:
             client.isPrivate = not client.isPrivate
             logger.warning("\x1b[31mSwitch to private mode\x1b[0m")
