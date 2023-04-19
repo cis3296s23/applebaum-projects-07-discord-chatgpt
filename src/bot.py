@@ -14,6 +14,8 @@ logger = log.setup_logger(__name__)
 def run_discord_bot():
     @client.event
     async def on_ready():
+        client.guild_map[1075881043585937529] = Guild(client.get_chatbot_model())
+        client.guild_map[1075881043585937529].reply_all_channel = 1093237764570484796
         await client.tree.sync()
         logger.info(f'{client.user} is now running!')
 
@@ -38,7 +40,9 @@ def run_discord_bot():
 
     @client.tree.command(name="chat", description="Have a chat with ChatGPT")
     async def chat(interaction: discord.Interaction, *, message: str):
-        if client.guild_map[interaction.guild_id].is_replying_all:
+        guild = client.guild_map[interaction.guild_id]
+        print(guild)
+        if guild.is_replying_all:
             await interaction.followup.defer(ephemeral=False)
             await interaction.followup.send(
                 "> **Warn: Reply all mode is enabled. If you want to use slash command, switch to normal mode using `/replyall`**")
@@ -55,7 +59,7 @@ def run_discord_bot():
     @client.tree.command(name="private", description="Toggle private access")
     async def private(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
-        await interaction.followup.defer(ephemeral=False)
+        await interaction.response.defer(ephemeral=False)
         if not guild.is_private:
             guild.is_private = not guild.is_private
             logger.warning("\x1b[31mSwitch to private mode\x1b[0m")
@@ -71,7 +75,7 @@ def run_discord_bot():
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=False)
         if guild.is_private:
-            guild.isPrivate = not guild.isPrivate
+            guild.is_private = not guild.isPrivate
             await interaction.followup.send(
                 "> **Info: Next, the response will be sent to the channel directly. If you want to switch back to private mode, use `/private`**")
             logger.warning("\x1b[31mSwitch to public mode\x1b[0m")
@@ -147,12 +151,12 @@ def run_discord_bot():
 
     @client.event
     async def on_message(message):
-        guild = client.guild_map[message.guild_id]
+        guild = client.guild_map[message.guild.id]
         if guild.is_replying_all:
             if message.author == client.user:
                 return
             if guild.reply_all_channel:
-                if message.channel_id == guild.reply_all_channel:
+                if message.channel.id == guild.reply_all_channel:
                     username = str(message.author)
                     user_message = str(message.content)
                     channel = str(message.channel)

@@ -33,10 +33,13 @@ class Client(discord.Client):
         self.activity = discord.Activity(type=discord.ActivityType.listening, name="/help")
         self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
-        self.guild_map = TypedDict('guild_map', {"guild_id":int, "guild": Guild})
+        self.guild_map = {}
 
     async def send_message(self, message: discord.Interaction, user_message):
-        guild = self.guild_map[message.guild_id]
+        if isinstance(message, discord.Message):
+            guild = self.guild_map[message.guild.id]
+        else:
+            guild = self.guild_map[message.guild_id]
         if not guild.is_replying_all:
             author = message.user.id
             await message.response.defer(ephemeral=False)
@@ -44,7 +47,6 @@ class Client(discord.Client):
             author = message.channel.id
         try:
             response = (f'> **{user_message}** - <@{str(author)}' + '> \n\n')
-            guild = self.guild_map[message.guild_id]
             response = f"{response}{await responses.handle_response(user_message, guild.chatbot)}"
             char_limit = 1900
             if len(response) > char_limit:
@@ -54,11 +56,11 @@ class Client(discord.Client):
                     if guild.is_replying_all:
                         await message.channel.send(chunk)
                     else:
-                        await message.followup.send(chunk)
+                        await message.followup.send(chunk, ephemeral=guild.is_private)
             elif guild.is_replying_all:
                 await message.channel.send(response)
             else:
-                await message.followup.send(response)
+                await message.followup.send(response, ephemeral=guild.is_private)
         except Exception as e:
             if guild.is_replying_all:
                 await message.channel.send("> **ERROR: Something went wrong, please try again later!**")
