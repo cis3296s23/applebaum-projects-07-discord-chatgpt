@@ -6,6 +6,7 @@ from random import randrange
 from src.client import client
 from discord import app_commands
 from src import log, responses
+from src.client import Guild
 
 logger = log.setup_logger(__name__)
 
@@ -17,12 +18,23 @@ def run_discord_bot():
         logger.info(f'{client.user} is now running!')
 
     @client.tree.command(name="initialize", description="Initialize your Dungeon Master!")
-    async def initialize(interaction: discord.Interaction):
+    async def initialize(interaction: discord.Interaction, reply_all_channel: int):
         await interaction.response.defer(ephemeral=False)
-        client.guild_map[interaction.guild_id] = client.get_chatbot_model()
-        logger.info(f"\x1b[31mNew Chatbot initialiezd for guild={interaction.guild_id}")
-        await client.send_start_prompt(interaction)
-        interaction.followup.send("Dungeon master initialize! Please proceed with \\chat!")
+        try:
+            if interaction.guild.get_channel(reply_all_channel):
+                chatbot = client.get_chatbot_model()
+                guild = Guild(chatbot, reply_all_channel)
+                client.guild_map[interaction.guild_id] = guild
+                logger.info(f"\x1b[31mNew Chatbot initialiezd for guild={interaction.guild_id}\x1b[0m")
+                await interaction.followup.send("Dungeon master initialized!")
+                await client.send_start_prompt(interaction)
+            else:
+                logger.info(f"\x1b[31mBad channel ID passed\x1b[0m")
+                await interaction.followup.send(
+                    "> **Warn: Bad channel ID!**")
+        except Exception as e:
+            await interaction.followup.send("> **ERROR: Bad channel ID!**")
+            logger.exception(f"Error while sending message: {e}")
 
     @client.tree.command(name="chat", description="Have a chat with ChatGPT")
     async def chat(interaction: discord.Interaction, *, message: str):
@@ -129,7 +141,8 @@ def run_discord_bot():
             if message.author == client.user:
                 return
             if client.replying_all_discord_channel_id:
-                if message.channel_id == int(client.replying_all_discord_channel_id):
+                guild = client.guild_map[message.guild_id]
+                if message.channel_id == guild.reply_all_channel:
                     username = str(message.author)
                     user_message = str(message.content)
                     channel = str(message.channel)

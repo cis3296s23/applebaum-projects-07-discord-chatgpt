@@ -8,6 +8,10 @@ from revChatGPT.V3 import Chatbot
 logger = log.setup_logger(__name__)
 load_dotenv()
 
+class Guild:
+    def __init__(self, guild_reply_all_channel, guild_chatbot):
+        self.reply_all_channel = guild_reply_all_channel
+        self.chatbot = guild_chatbot
 
 class Client(discord.Client):
     def __init__(self) -> None:
@@ -39,8 +43,8 @@ class Client(discord.Client):
             author = message.channel.id
         try:
             response = (f'> **{user_message}** - <@{str(author)}' + '> \n\n')
-            chatbot = self.guild_map[message.guild_id]
-            response = f"{response}{await responses.handle_response(user_message, chatbot)}"
+            guild = self.guild_map[message.guild_id]
+            response = f"{response}{await responses.handle_response(user_message, guild.chatbot)}"
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
@@ -67,21 +71,14 @@ class Client(discord.Client):
         config_dir = os.path.abspath(f"{__file__}/../../")
         prompt_name = 'system-prompt.txt'
         prompt_path = os.path.join(config_dir, prompt_name)
-        discord_channel_id = os.getenv("DISCORD_CHANNEL_ID")
         try:
-            if os.path.isfile(prompt_path) and os.path.getsize(prompt_path) > 0:
-                with open(prompt_path, "r", encoding="utf-8") as f:
-                    prompt = f.read()
-                    if discord_channel_id:
-                        logger.info(f"Send system prompt with size {len(prompt)}")
-                        response = ""
-                        response = f"{response}{await responses.handle_response(prompt, self.guild_map[interaction.guild_id])}"
-                        await interaction.followup.send(response)
-                        logger.info(f"System prompt response:{response}")
-                    else:
-                        logger.info("No Channel selected. Skip sending system prompt.")
-            else:
-                logger.info(f"No {prompt_name}. Skip sending system prompt.")
+            with open(prompt_path, "r", encoding="utf-8") as f:
+                prompt = f.read()
+                logger.info(f"Send system prompt with size {len(prompt)}")
+                response = ""
+                response = f"{response}{await responses.handle_response(prompt, self.guild_map[interaction.guild_id])}"
+                await interaction.followup.send(response)
+                logger.info(f"System prompt response:{response}")
         except Exception as e:
             logger.exception(f"Error while sending system prompt: {e}")
 
