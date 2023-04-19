@@ -8,6 +8,7 @@ from revChatGPT.V3 import Chatbot
 logger = log.setup_logger(__name__)
 load_dotenv()
 
+
 class Client(discord.Client):
     def __init__(self) -> None:
         config_dir = os.path.abspath(f"{__file__}/../../")
@@ -27,7 +28,7 @@ class Client(discord.Client):
         self.replying_all_discord_channel_id = os.getenv("REPLY_ALL_CHANNEL_ID")
         self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
-        self.chatbot = self.get_chatbot_model()
+        # self.chatbot = self.get_chatbot_model()
         self.guild_map = {}
 
     async def send_message(self, message: discord.Interaction, user_message):
@@ -38,7 +39,8 @@ class Client(discord.Client):
             author = message.channel.id
         try:
             response = (f'> **{user_message}** - <@{str(author)}' + '> \n\n')
-            response = f"{response}{await responses.handle_response(user_message, self)}"
+            chatbot = self.guild_map[message.guild_id]
+            response = f"{response}{await responses.handle_response(user_message, chatbot)}"
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
@@ -59,7 +61,7 @@ class Client(discord.Client):
                 await message.followup.send("> **ERROR: Something went wrong, please try again later!**")
             logger.exception(f"Error while sending message: {e}")
 
-    async def send_start_prompt(self):
+    async def send_start_prompt(self, interaction):
         import os.path
 
         config_dir = os.path.abspath(f"{__file__}/../../")
@@ -73,9 +75,8 @@ class Client(discord.Client):
                     if discord_channel_id:
                         logger.info(f"Send system prompt with size {len(prompt)}")
                         response = ""
-                        response = f"{response}{await responses.handle_response(prompt, self)}"
-                        channel = self.get_channel(int(discord_channel_id))
-                        await channel.send(response)
+                        response = f"{response}{await responses.handle_response(prompt, self.guild_map[interaction.guild_id])}"
+                        await interaction.followup.send(response)
                         logger.info(f"System prompt response:{response}")
                     else:
                         logger.info("No Channel selected. Skip sending system prompt.")

@@ -9,13 +9,20 @@ from src import log, responses
 
 logger = log.setup_logger(__name__)
 
-def run_discord_bot():
 
+def run_discord_bot():
     @client.event
     async def on_ready():
-        await client.send_start_prompt()
         await client.tree.sync()
         logger.info(f'{client.user} is now running!')
+
+    @client.tree.command(name="initialize", description="Initialize your Dungeon Master!")
+    async def initialize(interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=False)
+        client.guild_map[interaction.guild_id] = client.get_chatbot_model()
+        logger.info(f"\x1b[31mNew Chatbot initialiezd for guild={interaction.guild_id}")
+        await client.send_start_prompt(interaction)
+        interaction.followup.send("Dungeon master initialize! Please proceed with \\chat!")
 
     @client.tree.command(name="chat", description="Have a chat with ChatGPT")
     async def chat(interaction: discord.Interaction, *, message: str):
@@ -74,11 +81,10 @@ def run_discord_bot():
                 "> **INFO: Next, the bot will disable Slash Command and responding to all message in this channel only. If you want to switch back to normal mode, use `/replyAll` again**")
             logger.warning("\x1b[31mSwitch to replyAll mode\x1b[0m")
 
-
     @client.tree.command(name="reset", description="Complete reset ChatGPT conversation history")
     async def reset(interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
-        client.chatbot = client.get_chatbot_model()
+        client.guild_map[interaction.guild_id] = client.get_chatbot_model()
         await interaction.followup.send("> **Info: I have forgotten everything.**")
         logger.warning(
             "\x1b[31mModel has been successfully reset\x1b[0m")
@@ -129,6 +135,6 @@ def run_discord_bot():
                     channel = str(message.channel)
                     logger.info(f"\x1b[31m{username}\x1b[0m : '{user_message}' ({channel})")
                     await client.send_message(message, user_message)
-    
+
     TOKEN = os.getenv("DISCORD_TOKEN")
     client.run(TOKEN)
