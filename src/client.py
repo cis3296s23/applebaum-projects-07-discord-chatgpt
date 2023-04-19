@@ -11,10 +11,11 @@ logger = log.setup_logger(__name__)
 load_dotenv()
 
 class Guild:
-    def __init__(self, guild_chatbot, guild_is_replying_all, guild_reply_all_channel):
+    def __init__(self, guild_chatbot):
         self.chatbot = guild_chatbot
-        self.is_replying_all = guild_is_replying_all
-        self.reply_all_channel = guild_reply_all_channel
+        self.is_replying_all = False
+        self.reply_all_channel = None
+        self.is_private = False
 
 class Client(discord.Client):
     def __init__(self) -> None:
@@ -30,14 +31,13 @@ class Client(discord.Client):
 
         self.tree = app_commands.CommandTree(self)
         self.activity = discord.Activity(type=discord.ActivityType.listening, name="/help")
-        self.isPrivate = False
-        self.is_replying_all = False
         self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
         self.guild_map = TypedDict('guild_map', {"guild_id":int, "guild": Guild})
 
     async def send_message(self, message: discord.Interaction, user_message):
-        if not self.is_replying_all:
+        guild = self.guild_map[message.guild_id]
+        if not guild.is_replying_all:
             author = message.user.id
             await message.response.defer(ephemeral=False)
         else:
@@ -51,16 +51,16 @@ class Client(discord.Client):
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
                 response_chunks = [response[i:i + char_limit] for i in range(0, len(response), char_limit)]
                 for chunk in response_chunks:
-                    if self.is_replying_all:
+                    if guild.is_replying_all:
                         await message.channel.send(chunk)
                     else:
                         await message.followup.send(chunk)
-            elif self.is_replying_all:
+            elif guild.is_replying_all:
                 await message.channel.send(response)
             else:
                 await message.followup.send(response)
         except Exception as e:
-            if self.is_replying_all:
+            if guild.is_replying_all:
                 await message.channel.send("> **ERROR: Something went wrong, please try again later!**")
             else:
                 await message.followup.send("> **ERROR: Something went wrong, please try again later!**")
