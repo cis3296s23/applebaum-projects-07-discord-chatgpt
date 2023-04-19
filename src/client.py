@@ -1,14 +1,14 @@
 import os
 import discord
-from src import log, responses
+from src import log
 from dotenv import load_dotenv
 from discord import app_commands
 from revChatGPT.V3 import Chatbot
 from asgiref.sync import sync_to_async
-from typing import TypedDict
 
 logger = log.setup_logger(__name__)
 load_dotenv()
+
 
 class Guild:
     def __init__(self, guild_chatbot):
@@ -16,6 +16,7 @@ class Guild:
         self.is_replying_all = False
         self.reply_all_channel = None
         self.is_private = False
+
 
 class Client(discord.Client):
     def __init__(self) -> None:
@@ -35,7 +36,7 @@ class Client(discord.Client):
         self.openAI_gpt_engine = os.getenv("ENGINE")
         self.guild_map = {}
 
-    async def send_message(self, message: discord.Interaction, user_message):
+    async def send_message(self, message: discord.Interaction, user_input):
         if isinstance(message, discord.Message):
             guild = self.guild_map[message.guild.id]
         else:
@@ -46,8 +47,8 @@ class Client(discord.Client):
         else:
             author = message.channel.id
         try:
-            response = (f'> **{user_message}** - <@{str(author)}' + '> \n\n')
-            response = f"{response}{await responses.handle_response(user_message, guild.chatbot)}"
+            response = (f'> **{user_input}** - <@{str(author)}' + '> \n\n')
+            response = f"{response}{await sync_to_async(guild.chatbot)(user_input)}"
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)

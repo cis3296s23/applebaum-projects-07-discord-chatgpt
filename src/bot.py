@@ -5,7 +5,7 @@ import re
 from random import randrange
 from src.client import client
 from discord import app_commands
-from src import log, responses
+from src import log
 from src.client import Guild
 
 logger = log.setup_logger(__name__)
@@ -39,7 +39,7 @@ def run_discord_bot():
             logger.warning("\x1b[31mBad channel ID for guild={guild.id}\x1b[0m")
 
     @client.tree.command(name="chat", description="Have a chat with ChatGPT")
-    async def chat(interaction: discord.Interaction, *, message: str):
+    async def chat(interaction: discord.Interaction, *, input: str):
         guild = client.guild_map[interaction.guild_id]
         print(guild)
         if guild.is_replying_all:
@@ -53,8 +53,8 @@ def run_discord_bot():
         username = str(interaction.user)
         channel = str(interaction.channel)
         logger.info(
-            f"\x1b[31m{username}\x1b[0m : '{message}' ({channel})")
-        await client.send_message(interaction, message)
+            f"\x1b[31m{username}\x1b[0m : '{input}' ({channel})")
+        await client.send_message(interaction, input)
 
     @client.tree.command(name="private", description="Toggle private access")
     async def private(interaction: discord.Interaction):
