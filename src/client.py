@@ -4,14 +4,16 @@ from src import log, responses
 from dotenv import load_dotenv
 from discord import app_commands
 from revChatGPT.V3 import Chatbot
+from typing import TypedDict
 
 logger = log.setup_logger(__name__)
 load_dotenv()
 
 class Guild:
-    def __init__(self, guild_reply_all_channel, guild_chatbot):
-        self.reply_all_channel = guild_reply_all_channel
+    def __init__(self, guild_chatbot, guild_is_replying_all, guild_reply_all_channel):
         self.chatbot = guild_chatbot
+        self.is_replying_all = guild_is_replying_all
+        self.reply_all_channel = guild_reply_all_channel
 
 class Client(discord.Client):
     def __init__(self) -> None:
@@ -26,14 +28,12 @@ class Client(discord.Client):
         super().__init__(intents=intents)
 
         self.tree = app_commands.CommandTree(self)
-        self.activity = discord.Activity(type=discord.ActivityType.listening, name="/chat | /help")
+        self.activity = discord.Activity(type=discord.ActivityType.listening, name="/help")
         self.isPrivate = False
         self.is_replying_all = False
-        self.replying_all_discord_channel_id = os.getenv("REPLY_ALL_CHANNEL_ID")
         self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
-        # self.chatbot = self.get_chatbot_model()
-        self.guild_map = {}
+        self.guild_map = TypedDict('guild_map', {"guild_id":int, "guild": Guild})
 
     async def send_message(self, message: discord.Interaction, user_message):
         if not self.is_replying_all:
