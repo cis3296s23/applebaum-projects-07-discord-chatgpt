@@ -4,6 +4,7 @@ from src import log, responses
 from dotenv import load_dotenv
 from discord import app_commands
 from revChatGPT.V3 import Chatbot
+from asgiref.sync import sync_to_async
 from typing import TypedDict
 
 logger = log.setup_logger(__name__)
@@ -75,8 +76,8 @@ class Client(discord.Client):
             with open(prompt_path, "r", encoding="utf-8") as f:
                 prompt = f.read()
                 logger.info(f"Send system prompt with size {len(prompt)}")
-                response = ""
-                response = f"{response}{await responses.handle_response(prompt, self.guild_map[interaction.guild_id])}"
+                chatbot = self.guild_map[interaction.guild_id]
+                response = await sync_to_async(chatbot.ask)(prompt)
                 await interaction.followup.send(response)
                 logger.info(f"System prompt response:{response}")
         except Exception as e:
