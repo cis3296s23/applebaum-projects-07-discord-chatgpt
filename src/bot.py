@@ -113,6 +113,7 @@ def run_discord_bot():
 
     @client.tree.command(name="reset", description="Complete reset ChatGPT conversation history")
     async def reset(interaction: discord.Interaction):
+        guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=guild.is_private)
         client.guild_map[interaction.guild_id].chatbot = client.get_chatbot_model()
         await interaction.followup.send("> **Info: I have forgotten everything.**")
