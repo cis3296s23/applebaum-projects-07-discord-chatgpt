@@ -14,8 +14,8 @@ logger = log.setup_logger(__name__)
 def run_discord_bot():
     @client.event
     async def on_ready():
-        client.guild_map[1075881043585937529] = Guild(client.get_chatbot_model())
-        client.guild_map[1075881043585937529].reply_all_channel = 1093237764570484796
+        client.guild_map[1075881043585937529] = Guild(client.get_chatbot_model()) # Test server guild
+        client.guild_map[1075881043585937529].reply_all_channel = "1093237764570484796"
         await client.tree.sync()
         logger.info(f'{client.user} is now running!')
 
@@ -26,11 +26,11 @@ def run_discord_bot():
         logger.info(f"\x1b[31mNew Chatbot initialized for guild={guild.id}\x1b[0m")
 
     @client.tree.command(name="initialize", description="Setup some basic info with the DM!")
-    async def initialize(interaction: discord.Interaction, *, reply_all_channel: int):
+    async def initialize(interaction: discord.Interaction, *, reply_all_channel: str):
         guild = client.guild_map[interaction.guild_id]
         interaction.response.defer(ephemeral=guild.is_private)
         if reply_all_channel:
-            client.guild_map[interaction.guild_id].reply_all_channel = reply_all_channel
+            client.guild_map[interaction.guild_id].reply_all_channel = int(reply_all_channel)
             interaction.followup.send("Reply all channel set!")
             logger.info("\x1b[31mReply all channel changed for guild={guild.id}\x1b[0m")
         else:
@@ -40,7 +40,7 @@ def run_discord_bot():
             logger.warning("\x1b[31mBad channel ID for guild={guild.id}\x1b[0m")
 
     @client.tree.command(name="chat", description="Have a chat with ChatGPT")
-    async def chat(interaction: discord.Interaction, *, input: str):
+    async def chat(interaction: discord.Interaction, *, user_input: str):
         guild = client.guild_map[interaction.guild_id]
         print(guild)
         if guild.is_replying_all:
@@ -54,8 +54,8 @@ def run_discord_bot():
         username = str(interaction.user)
         channel = str(interaction.channel)
         logger.info(
-            f"\x1b[31m{username}\x1b[0m : '{input}' ({channel})")
-        await client.send_message(interaction, input)
+            f"\x1b[31m{username}\x1b[0m : '{user_input}' ({channel})")
+        await client.send_message(interaction, user_input)
 
     @client.tree.command(name="private", description="Toggle private access")
     async def private(interaction: discord.Interaction):
