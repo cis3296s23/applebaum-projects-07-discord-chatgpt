@@ -43,12 +43,12 @@ class Client(discord.Client):
             guild = self.guild_map[message.guild_id]
         if not guild.is_replying_all:
             author = message.user.id
-            await message.response.defer(ephemeral=False)
+            await message.response.defer(ephemeral=guild.is_private)
         else:
             author = message.channel.id
         try:
             response = (f'> **{user_input}** - <@{str(author)}' + '> \n\n')
-            response = f"{response}{await sync_to_async(guild.chatbot)(user_input)}"
+            response = f"{response}{await sync_to_async(guild.chatbot.ask)(user_input)}"
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)

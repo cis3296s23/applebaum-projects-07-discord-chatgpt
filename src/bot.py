@@ -27,7 +27,8 @@ def run_discord_bot():
 
     @client.tree.command(name="initialize", description="Setup some basic info with the DM!")
     async def initialize(interaction: discord.Interaction, *, reply_all_channel: int):
-        interaction.response.defer(ephemeral=False)
+        guild = client.guild_map[interaction.guild_id]
+        interaction.response.defer(ephemeral=guild.is_private)
         if reply_all_channel:
             client.guild_map[interaction.guild_id].reply_all_channel = reply_all_channel
             interaction.followup.send("Reply all channel set!")
@@ -43,7 +44,7 @@ def run_discord_bot():
         guild = client.guild_map[interaction.guild_id]
         print(guild)
         if guild.is_replying_all:
-            await interaction.followup.defer(ephemeral=False)
+            await interaction.followup.defer(ephemeral=guild.is_private)
             await interaction.followup.send(
                 "> **Warn: Reply all mode is enabled. If you want to use slash command, switch to normal mode using `/replyall`**")
             logger.warning("\x1b[31mYou already on replyAll mode, can't use slash command!\x1b[0m")
@@ -59,7 +60,7 @@ def run_discord_bot():
     @client.tree.command(name="private", description="Toggle private access")
     async def private(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
-        await interaction.response.defer(ephemeral=False)
+        await interaction.response.defer(ephemeral=guild.is_private)
         if not guild.is_private:
             guild.is_private = not guild.is_private
             logger.warning("\x1b[31mSwitch to private mode\x1b[0m")
@@ -69,11 +70,13 @@ def run_discord_bot():
             logger.info("You already on private mode!")
             await interaction.followup.send(
                 "> **Warn: You already on private mode. If you want to switch to public mode, use `/public`**")
+        print(guild.is_private)
+
 
     @client.tree.command(name="public", description="Toggle public access")
     async def public(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
-        await interaction.response.defer(ephemeral=False)
+        await interaction.response.defer(ephemeral=guild.is_private)
         if guild.is_private:
             guild.is_private = not guild.is_private
             await interaction.followup.send(
@@ -83,11 +86,12 @@ def run_discord_bot():
             await interaction.followup.send(
                 "> **Warn: You already on public mode. If you want to switch to private mode, use `/private`**")
             logger.info("You already on public mode!")
+        print(guild.is_private)
 
     @client.tree.command(name="replyall", description="Toggle replyAll access")
     async def replyall(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
-        await interaction.response.defer(ephemeral=False)
+        await interaction.response.defer(ephemeral=guild.is_private)
 
         if not guild.reply_all_channel:
             await interaction.followup.send(
@@ -109,7 +113,7 @@ def run_discord_bot():
 
     @client.tree.command(name="reset", description="Complete reset ChatGPT conversation history")
     async def reset(interaction: discord.Interaction):
-        await interaction.response.defer(ephemeral=False)
+        await interaction.response.defer(ephemeral=guild.is_private)
         client.guild_map[interaction.guild_id].chatbot = client.get_chatbot_model()
         await interaction.followup.send("> **Info: I have forgotten everything.**")
         logger.warning(
@@ -137,7 +141,8 @@ def run_discord_bot():
 
     @client.tree.command(name="help", description="Show help for the bot")
     async def help(interaction: discord.Interaction):
-        await interaction.response.defer(ephemeral=False)
+        guild = client.guild_map[interaction.guild_id]
+        await interaction.response.defer(ephemeral=guild.is_private)
         await interaction.followup.send(""":star:**BASIC COMMANDS** \n
         - `/chat [message]` Chat with ChatGPT!
         - `/roll [<# of dice>d<# of faces>]` Roll dice! Format as 1d20, 3d6, etc.
