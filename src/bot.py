@@ -75,7 +75,7 @@ def run_discord_bot():
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=False)
         if guild.is_private:
-            guild.is_private = not guild.isPrivate
+            guild.is_private = not guild.is_private
             await interaction.followup.send(
                 "> **Info: Next, the response will be sent to the channel directly. If you want to switch back to private mode, use `/private`**")
             logger.warning("\x1b[31mSwitch to public mode\x1b[0m")
