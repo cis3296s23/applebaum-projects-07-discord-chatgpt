@@ -28,13 +28,13 @@ def run_discord_bot():
     @client.tree.command(name="initialize", description="Setup some basic info with the DM!")
     async def initialize(interaction: discord.Interaction, *, reply_all_channel: str):
         guild = client.guild_map[interaction.guild_id]
-        interaction.response.defer(ephemeral=guild.is_private)
+        await interaction.response.defer(ephemeral=guild.is_private)
         if reply_all_channel:
             client.guild_map[interaction.guild_id].reply_all_channel = int(reply_all_channel)
-            interaction.followup.send("Reply all channel set!")
+            await interaction.followup.send("Reply all channel set!")
             logger.info("\x1b[31mReply all channel changed for guild={guild.id}\x1b[0m")
         else:
-            interaction.followup.send(
+            await interaction.followup.send(
                 "> **Warn: Bad channel ID, please try again.**"
             )
             logger.warning("\x1b[31mBad channel ID for guild={guild.id}\x1b[0m")
