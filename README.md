@@ -49,4 +49,4 @@
    
         ![channel-id](https://user-images.githubusercontent.com/89479282/207697217-e03357b3-3b3d-44d0-b880-163217ed4a49.PNG)
     
-   2. Pase it into `\intialize` under `channel_id`
+   2. Paste it into `\initialize` under `channel_id`
