@@ -2,6 +2,7 @@ import os
 import discord
 import openai
 import re
+import json
 from random import randrange
 from src.client import client
 from discord import app_commands
@@ -24,6 +25,49 @@ def run_discord_bot():
         chatbot = client.get_chatbot_model()
         client.guild_map[guild.id] = Guild(chatbot)
         logger.info(f"\x1b[31mNew Chatbot initialized for guild={guild.id}\x1b[0m")
+
+    @client.tree.command(name="save", description="Save the key details of the session from the client and discord bot to be loaded again at another time ")
+    async def save_campaign(interaction: discord.Interaction, *, message: str):
+        guild = client.guild_map[interaction.guild_id]
+        if interaction.user == client.user:
+            return 
+        # set up the json data
+        data = {'ID': interaction.guild_id,
+                'session_history': guild.session_history, 
+                'is_private': guild.is_private, 
+                'reply_all_channel' : guild.replay_all_channel, 
+                'is_replying_all' : guild.is_replying_all}
+
+
+        # save to json
+        with open('saves/' + str(interaction.guild_id) + '.json', 'w') as f:
+            json.dump(data, f)
+
+    
+    #backup create version one
+    @client.tree.command(name="create", description="Creates the Story by generating the DND campaign")
+    async def create(interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=False)
+        if interaction.user == client.user:
+            return
+        username = str(interaction.user)
+        prompt = "Begin a randomized simple Dungeon & Dragons campaign"
+        channel = str(interaction.channel)
+        logger.info(f"\x1b[31m{username}\x1b[0m : '{prompt}' ({channel})")
+        await send_message(interaction, prompt)
+
+    #backup continue version one
+    @client.tree.command(name="continue", description="Continues a given story")
+    async def prompt_continue(interaction: discord.Interaction, *, message: str):
+        await interaction.response.defer(ephemeral=False)
+        if interaction.user == client.user:
+            return
+        username = str(interaction.user)
+        prompt = "Continue the story based on this input and expand upon it: " + message
+        channel = str(interaction.channel)
+        logger.info(f"\x1b[31m{username}\x1b[0m : '{prompt}' ({channel})")
+        await send_message(interaction, prompt) 
+
 
     @client.tree.command(name="initialize", description="Setup some basic info with the DM!")
     async def initialize(interaction: discord.Interaction, *, reply_all_channel: str):

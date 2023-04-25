@@ -1,5 +1,6 @@
 import os
 import discord
+import json
 from src import log
 from dotenv import load_dotenv
 from discord import app_commands
@@ -16,6 +17,7 @@ class Guild:
         self.is_replying_all = False
         self.reply_all_channel = None
         self.is_private = False
+        self.session_history = ""
 
 
 class Client(discord.Client):
@@ -49,12 +51,14 @@ class Client(discord.Client):
         try:
             response = (f'> **{user_input}** - <@{str(author)}' + '> \n\n')
             response = f"{response}{await sync_to_async(guild.chatbot.ask)(user_input)}"
+            session_history += message.content
+            session_history += response
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
                 response_chunks = [response[i:i + char_limit] for i in range(0, len(response), char_limit)]
                 for chunk in response_chunks:
-                    if guild.is_replying_all:
+                    if guild.is_replying_all:                                            
                         await message.channel.send(chunk)
                     else:
                         await message.followup.send(chunk, ephemeral=guild.is_private)
