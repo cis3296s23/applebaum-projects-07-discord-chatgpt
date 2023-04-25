@@ -20,6 +20,16 @@ class Guild:
         self.session_history = ""
 
 
+def chunkify(response: str) -> list:
+    """Break a response into 1900 character or fewer chunks
+
+    Keyword arguments:
+    response -- the message needing chunked
+    """
+    char_limit = 1900
+    return [response[i:i + char_limit] for i in range(0, len(response), char_limit)]
+
+
 class Client(discord.Client):
     def __init__(self) -> None:
         config_dir = os.path.abspath(f"{__file__}/../../")
@@ -54,18 +64,13 @@ class Client(discord.Client):
             session_history += message.content + "\n"
             session_history += response + "\n"
             char_limit = 1900
-            if len(response) > char_limit:
-                # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
-                response_chunks = [response[i:i + char_limit] for i in range(0, len(response), char_limit)]
-                for chunk in response_chunks:
-                    if guild.is_replying_all:                                            
-                        await message.channel.send(chunk)
-                    else:
-                        await message.followup.send(chunk, ephemeral=guild.is_private)
-            elif guild.is_replying_all:
-                await message.channel.send(response)
-            else:
-                await message.followup.send(response, ephemeral=guild.is_private)
+            # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
+            response_chunks = chunkify(response)
+            for chunk in response_chunks:
+                if guild.is_replying_all:
+                    await message.channel.send(chunk)
+                else:
+                    await message.followup.send(chunk, ephemeral=guild.is_private)
         except Exception as e:
             if guild.is_replying_all:
                 await message.channel.send("> **ERROR: Something went wrong, please try again later!**")
@@ -91,6 +96,7 @@ class Client(discord.Client):
             logger.exception(f"Error while sending system prompt: {e}")
 
     def get_chatbot_model(self) -> Chatbot:
+        """Instantiate and return a new OpenAI Chatbot object witht the default system prompt"""
         return Chatbot(api_key=self.openAI_API_key, engine=self.openAI_gpt_engine, system_prompt=self.prompt)
 
 
