@@ -66,7 +66,7 @@ class Client(discord.Client):
             # Pass input to chatgpt asynchronously
             response = f"{response}{await sync_to_async(guild.chatbot.ask)(user_input)}"
             # Save the state
-            self.session_history += message.content + "\n"
+            #self.session_history += message.content + "\n"
             self.session_history += response + "\n"
             # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
             response_chunks = chunkify(response)
