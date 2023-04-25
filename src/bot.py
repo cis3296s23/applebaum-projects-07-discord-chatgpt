@@ -37,8 +37,6 @@ def run_discord_bot():
                 'is_private': guild.is_private, 
                 'reply_all_channel' : guild.replay_all_channel, 
                 'is_replying_all' : guild.is_replying_all}
-
-
         # save to json
         with open('saves/' + str(interaction.guild_id) + '.json', 'w') as f:
             json.dump(data, f)

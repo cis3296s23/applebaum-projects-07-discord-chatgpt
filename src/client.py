@@ -51,8 +51,8 @@ class Client(discord.Client):
         try:
             response = (f'> **{user_input}** - <@{str(author)}' + '> \n\n')
             response = f"{response}{await sync_to_async(guild.chatbot.ask)(user_input)}"
-            session_history += message.content
-            session_history += response
+            session_history += message.content + "\n"
+            session_history += response + "\n"
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
