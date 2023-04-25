@@ -21,3 +21,6 @@ venv
 
 .idea
 .idea/workspace.xml
+
+.coverage
+htmlcov

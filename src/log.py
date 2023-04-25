@@ -53,7 +53,7 @@ def setup_logger(module_name: str) -> logging.Logger:
     logger.addHandler(console_handler)
 
     if os.getenv("LOGGING") == "True":  # Check if logging is enabled
-        # specify that the log file path is the same as `main.py` file path
+        # Build logfile path
         grandparent_dir = os.path.abspath(f"{__file__}/../../")
         log_name = 'logs/chatdd.log'
         log_path = os.path.join(grandparent_dir, log_name)
@@ -62,7 +62,7 @@ def setup_logger(module_name: str) -> logging.Logger:
             filename=log_path,
             encoding='utf-8',
             maxBytes=32 * 1024 * 1024,  # 32 MiB
-            backupCount=2,  # Rotate through 5 files
+            backupCount=2,  # Rotate through 2 files
         )
         log_handler.setFormatter(CustomFormatter())
         log_handler.setLevel(level)
