@@ -15,7 +15,7 @@ logger = log.setup_logger(__name__)
 def run_discord_bot():
     @client.event
     async def on_ready():
-        client.guild_map[1075881043585937529] = Guild(client.get_chatbot_model()) # Test server guild
+        client.guild_map[1075881043585937529] = Guild(1075881043585937529, client.get_chatbot_model()) # Test server guild
         client.guild_map[1075881043585937529].reply_all_channel = "1093237764570484796"
         await client.tree.sync()
         logger.info(f'{client.user} is now running!')
@@ -23,7 +23,7 @@ def run_discord_bot():
     @client.event
     async def on_guild_join(guild: discord.Guild):
         chatbot = client.get_chatbot_model()
-        client.guild_map[guild.id] = Guild(chatbot)
+        client.guild_map[guild.id] = Guild(guild.id, chatbot)
         logger.info(f"\x1b[31mNew Chatbot initialized for guild={guild.id}\x1b[0m")
 
     @client.tree.command(name="save", description="Save the key details of the session from the client and discord bot to be loaded again at another time ")
