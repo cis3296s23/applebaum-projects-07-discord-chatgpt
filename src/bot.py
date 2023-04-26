@@ -29,16 +29,36 @@ def run_discord_bot():
         if interaction.user == client.user:
             return 
         # set up the json data
-        data = {'ID': interaction.guild_id,
+        data = {'guild_id': guild.id,
                 'session_history': guild.session_history, 
                 'is_private': guild.is_private, 
                 'reply_all_channel' : guild.replay_all_channel, 
                 'is_replying_all' : guild.is_replying_all}
         # save to json
-        with open('saves/' + str(interaction.guild_id) + '.json', 'w') as f:
+        with open('saves/' + str(guild.id) + '.json', 'w') as f:
             json.dump(data, f)
 
-    
+    @client.tree.command(name="load", description="Load the details of a previous session.")
+    async def load_campaign(interaction: discord.Interaction):
+        guild = client.guild_map[interaction.guild_id]
+        if interaction.user == client.user:
+            return 
+        # load data from json
+        try:
+            with open('saves/' + str(guild.id) + '.json', 'r') as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            await interaction.response.send_message("No save file found for this server!", ephemeral=True)
+            logger.warning(f"\x1b[31mNo save file found for guild={guild.id}\x1b[0m")
+            return
+        # set guild data from json
+        guild.id = data['guild_id']
+        guild.session_history = data['session_history']
+        guild.is_private = data['is_private']
+        guild.reply_all_channel = data['reply_all_channel']
+        guild.is_replying_all = data['is_replying_all']
+        await interaction.response.send_message("Campaign loaded successfully!", ephemeral=True)
+
     #backup create version one
     @client.tree.command(name="create", description="Creates the Story by generating the DND campaign")
     async def create(interaction: discord.Interaction):
