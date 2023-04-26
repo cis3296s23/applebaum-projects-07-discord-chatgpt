@@ -14,10 +14,13 @@
 # Do not commit log files
 *.log
 
-src/__pycache__
+*/__pycache__
 
 # Virtual Environment
 venv
 
 .idea
 .idea/workspace.xml
+
+.coverage
+htmlcov

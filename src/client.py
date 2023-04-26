@@ -12,12 +12,23 @@ load_dotenv()
 
 
 class Guild:
-    def __init__(self, guild_chatbot):
+    def __init__(self, guild_id, guild_chatbot):
+        self.id = guild_id
         self.chatbot = guild_chatbot
         self.is_replying_all = False
         self.reply_all_channel = None
         self.is_private = False
         self.session_history = ""
+
+
+def chunkify(response: str) -> list:
+    """Break a response into 1900 character or fewer chunks
+
+    Keyword arguments:
+    response -- the message needing chunked
+    """
+    char_limit = 1900
+    return [response[i:i + char_limit] for i in range(0, len(response), char_limit)]
 
 
 class Client(discord.Client):
@@ -49,23 +60,21 @@ class Client(discord.Client):
         else:
             author = message.channel.id
         try:
+            # Format initial response string
             response = (f'> **{user_input}** - <@{str(author)}' + '> \n\n')
+            # Pass input to chatgpt asynchronously
             response = f"{response}{await sync_to_async(guild.chatbot.ask)(user_input)}"
-            session_history += message.content + "\n"
-            session_history += response + "\n"
-            char_limit = 1900
-            if len(response) > char_limit:
-                # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
-                response_chunks = [response[i:i + char_limit] for i in range(0, len(response), char_limit)]
-                for chunk in response_chunks:
-                    if guild.is_replying_all:                                            
-                        await message.channel.send(chunk)
-                    else:
-                        await message.followup.send(chunk, ephemeral=guild.is_private)
-            elif guild.is_replying_all:
-                await message.channel.send(response)
-            else:
-                await message.followup.send(response, ephemeral=guild.is_private)
+            # Save the state
+            #self.session_history += message.content + "\n"
+            guild.session_history += response + "\n"
+            # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
+            response_chunks = chunkify(response)
+            for chunk in response_chunks:
+                if guild.is_replying_all:
+                    await message.channel.send(chunk)
+                else:
+                    await message.followup.send(chunk, ephemeral=guild.is_private)
+                logger.info(f"\x1b[31mChunk sent in guild={guild.id}\x1b[0m")
         except Exception as e:
             if guild.is_replying_all:
                 await message.channel.send("> **ERROR: Something went wrong, please try again later!**")
@@ -83,14 +92,16 @@ class Client(discord.Client):
             with open(prompt_path, "r", encoding="utf-8") as f:
                 prompt = f.read()
                 logger.info(f"Send system prompt with size {len(prompt)}")
-                chatbot = self.guild_map[interaction.guild_id]
+                guild = self.guild_map[interaction.guild_id]
+                chatbot = guild.chatbot
                 response = await sync_to_async(chatbot.ask)(prompt)
                 await interaction.followup.send(response)
-                logger.info(f"System prompt response:{response}")
+                logger.info(f"System prompt sent for guild={guild.id}")
         except Exception as e:
             logger.exception(f"Error while sending system prompt: {e}")
 
     def get_chatbot_model(self) -> Chatbot:
+        """Instantiate and return a new OpenAI Chatbot object witht the default system prompt"""
         return Chatbot(api_key=self.openAI_API_key, engine=self.openAI_gpt_engine, system_prompt=self.prompt)
 
 
