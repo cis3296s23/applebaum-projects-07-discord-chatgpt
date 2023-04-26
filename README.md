@@ -2,51 +2,53 @@
 
 ## Features
 
-* `/chat [message]` Send a message to ChatGPT! This is the main DnD entrypoint.
-* `/private` ChatGPT switch to private mode
-* `/public`  ChatGPT switch to public  mode
-* `/replyall`  ChatGPT switch between replyall mode and default mode
-* `/reset` Clear ChatGPT conversation history
+* `/chat [message]` Send a message to the Dungeon Master!
+* `/private` Enable private mode.
+* `/public`  Enable public mode.
+* `/save` Saves the current campaign for later loading in case of an outtage.
+* `/load` Loads the saved campaign data!
+* `/replyall`  Toggle between reply all and normal mode.
+* `/reset` Clear ChatGPT conversation history and optionally give the model a new starting prompt!
 * `/roll` Roll XdY dice (X dice, Y sides) for your various DnD needs!
-* `/help`  Show basic info on commands
+* `/help`  Show basic info on commands.
 
 ### Chat
 
-![image](https://user-images.githubusercontent.com/89479282/206497774-47d960cd-1aeb-4fba-9af5-1f9d6ff41f00.gif)
+![Example starting campaign message](assets/campaign_start.gif)
 
 ### Mode
 
-* `public mode (default)`  the bot directly reply on the channel
+* `public mode (default)`  The bot replies are viewable by everyone.
 
-  ![image](https://user-images.githubusercontent.com/89479282/206565977-d7c5d405-fdb4-4202-bbdd-715b7c8e8415.gif)
+  ![Public mode example](assets/public.gif))
 
-* `private mode` the bot's reply can only be seen by the person who used the command
+* `private mode` The bot's replies are *ephemeral* aka only the chat initiater can see the response.
 
-  ![image](https://user-images.githubusercontent.com/89479282/206565873-b181e600-e793-4a94-a978-47f806b986da.gif)
+  ![Private mode example](assets/private.gif)
 
-* `replyall mode` the bot will reply to all messages in the server without using slash commands
+* `replyall mode` The bot will ignore all slash commands and instead take every user message from a specific channel as bot input.
 
    > **Warning**
-   > The bot will easily be triggered in `replyall` mode, which could cause program failures
+   > The bot will easily be triggered in `replyall` mode, please be responsible!
 
 # Setup
 
 ## Install
 
-1. **Paste the invite link into a browser `https://discord.com/api/oauth2/authorize?client_id=1075678176883249242&permissions=277025589248&scope=bot`**
-2. **Choose a server you are an admin of to add it to with the correct permissions**
-3. **Use `/initialize` to set up some basic info with the bot `WIP - NOT IMPLEMENTED`**
+1. **Paste the invite link into a browser**
+    - `https://discord.com/api/oauth2/authorize?client_id=1075678176883249242&permissions=277025589248&scope=bot`
+2. **Choose a server you are an admin of to add it to**
 
-### Have a good chat!
+## Optional Setup
 
-## Optional: Setup starting prompt
+* `reply all` In order to use /replyall, you must provide the bot with a channel id, which it will use to identify the 
+channel it should be looking for. Make sure to enable Discord's [Developer Mode](https://www.howtogeek.com/714348/how-to-enable-or-disable-developer-mode-on-discord/) in order to be able to do this.
 
-* A starting prompt would be invoked when the bot is first started or reset
-* You can set it up using the `/initialize` command
-* All the text in the file will be fired as a prompt to the bot
+    ![Copying the channel ID](assets/channel_id.gif)
 
-   1. Right-click the channel you want to recieve the message, `Copy  ID`
-   
-        ![channel-id](https://user-images.githubusercontent.com/89479282/207697217-e03357b3-3b3d-44d0-b880-163217ed4a49.PNG)
-    
-   2. Pase it into `\intialize` under `channel_id`
+* `reset` If you have a specific campaign in mind, or would like to prime the chatbot with a persona, you can do so with the `reset` command.
+This command will reset the chatbot's state, and allow you to provide a new context for the bot. Get creative!
+  
+### Have a good campaign!
+
+If you have any questions or run into any bugs, please feel free to open an Issue under the GitHub Issues tab.
