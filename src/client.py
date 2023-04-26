@@ -48,7 +48,6 @@ class Client(discord.Client):
         self.openAI_API_key = os.getenv("OPENAI_KEY")
         self.openAI_gpt_engine = os.getenv("ENGINE")
         self.guild_map = {}
-        self.session_history = ""
 
     async def send_message(self, message: discord.Interaction, user_input):
         if isinstance(message, discord.Message):
@@ -67,7 +66,7 @@ class Client(discord.Client):
             response = f"{response}{await sync_to_async(guild.chatbot.ask)(user_input)}"
             # Save the state
             #self.session_history += message.content + "\n"
-            self.session_history += response + "\n"
+            guild.session_history += response + "\n"
             # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
             response_chunks = chunkify(response)
             for chunk in response_chunks:
