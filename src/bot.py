@@ -10,6 +10,8 @@ logger = log.setup_logger(__name__)
 
 
 def run_discord_bot():
+    """Initializes bot command tree, syncs commands to Discord, and initializes some test data"""
+
     @client.event
     async def on_ready():
         """Event to run whenever the bot comes online"""
@@ -200,7 +202,7 @@ def run_discord_bot():
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=guild.is_private)
         await interaction.followup.send(
-        f"""**BASIC COMMANDS** \n
+            f"""**BASIC COMMANDS** \n
         - `/chat [message]` {client.tree.get_command("chat").description}
         - `/roll [<# of dice>d<# of faces>]` {client.tree.get_command("roll").description}
         - `/save` {client.tree.get_command("save").description}
@@ -211,7 +213,7 @@ def run_discord_bot():
         - `/reset` {client.tree.get_command("reset").description}
         - `/help` Show this message! \n
         For complete documentation and some tips & tricks, please visit https://github.com/cis3296s23/applebaum-projects-07-discord-chatgpt""",
-        ephemeral=guild.is_private
+            ephemeral=guild.is_private
         )
         logger.info(
             f"\x1b[31mSomeone needs help in guild={guild.id}\x1b[0m"
