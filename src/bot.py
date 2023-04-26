@@ -54,7 +54,7 @@ def run_discord_bot():
             with open('saves/' + str(guild.id) + '.json', 'r') as f:
                 data = json.load(f)
         except FileNotFoundError:
-            await interaction.response.send("No save file found for this server!", ephemeral=guild.is_private)
+            await interaction.followup.send("No save file found for this server!", ephemeral=guild.is_private)
             logger.warning(f"\x1b[31mNo save file found for guild={guild.id}\x1b[0m")
             return
         # set guild data from json
@@ -64,7 +64,7 @@ def run_discord_bot():
         guild.reply_all_channel = data['reply_all_channel']
         guild.is_replying_all = data['is_replying_all']
         client.get_chatbot_model(guild.session_history) # Refreshes the campaign
-        await interaction.response.send("Campaign loaded successfully!", ephemeral=guild.is_private)
+        await interaction.followup.send("Campaign loaded successfully!", ephemeral=guild.is_private)
 
     @client.tree.command(name="chat", description="Send a message to the Dungeon Master!")
     async def chat(interaction: discord.Interaction, *, user_input: str):
