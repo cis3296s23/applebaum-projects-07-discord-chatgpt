@@ -13,6 +13,8 @@ load_dotenv()
 
 
 class Guild:
+    """Guild class used to store relevant data for each discord guild"""
+
     def __init__(self, guild_id, guild_chatbot):
         self.id = guild_id
         self.chatbot = guild_chatbot
@@ -33,6 +35,8 @@ def chunkify(response: str) -> list:
 
 
 class Client(discord.Client):
+    """Instance of discord.Client: the actual Bot"""
+
     def __init__(self) -> None:
         config_dir = os.path.abspath(f"{__file__}/../../")
         prompt_name = 'system-prompt.txt'
@@ -51,6 +55,7 @@ class Client(discord.Client):
         self.guild_map = {}
 
     async def send_message(self, message: discord.Interaction, user_input):
+        """Takes a discord.Interaction and some user input, sends the input to ChatGPT, and formats + sends a response"""
         if isinstance(message, discord.Message):
             guild = self.guild_map[message.guild.id]
         else:
@@ -66,7 +71,7 @@ class Client(discord.Client):
             # Pass input to chatgpt asynchronously
             response = f"{response}{await sync_to_async(guild.chatbot.ask)(user_input)}"
             # Save the state
-            #self.session_history += message.content + "\n"
+            # self.session_history += message.content + "\n"
             guild.session_history += response + "\n"
             # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
             response_chunks = chunkify(response)
@@ -80,10 +85,14 @@ class Client(discord.Client):
             if guild.is_replying_all:
                 await message.channel.send("> **ERROR: Something went wrong, please try again later!**")
             else:
-                await message.followup.send("> **ERROR: Something went wrong, please try again later!**")
+                await message.followup.send(
+                    "> **ERROR: Something went wrong, please try again later!**",
+                    ephemeral=guild.is_private
+                )
             logger.exception(f"Error while sending message: {e}")
 
     async def send_start_prompt(self, interaction):
+        """Utility method to initialize a chatbot with a starting prompt -- DEPRECATED"""
         import os.path
 
         config_dir = os.path.abspath(f"{__file__}/../../")
@@ -101,10 +110,10 @@ class Client(discord.Client):
         except Exception as e:
             logger.exception(f"Error while sending system prompt: {e}")
 
-    def get_chatbot_model(self, prompt: str="") -> Chatbot:
+    def get_chatbot_model(self, prompt: str = "") -> Chatbot:
         """Instantiate and return a new OpenAI Chatbot object witht the default system prompt"""
         if prompt == "":
-            prompt = self.prompt # Set the prompt = to the default prompt if none is given
+            prompt = self.prompt  # Set the prompt = to the default prompt if none is given
         return Chatbot(api_key=self.openAI_API_key, engine=self.openAI_gpt_engine, system_prompt=prompt)
 
 
