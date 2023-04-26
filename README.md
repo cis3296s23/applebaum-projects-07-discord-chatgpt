@@ -5,6 +5,8 @@
 * `/chat [message]` Send a message to the Dungeon Master!
 * `/private` Enable private mode.
 * `/public`  Enable public mode.
+* `/save` Saves the current campaign for later loading in case of an outtage.
+* `/load` Loads the saved campaign data!
 * `/replyall`  Toggle between reply all and normal mode.
 * `/reset` Clear ChatGPT conversation history and optionally give the model a new starting prompt!
 * `/roll` Roll XdY dice (X dice, Y sides) for your various DnD needs!
