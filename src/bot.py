@@ -12,7 +12,8 @@ logger = log.setup_logger(__name__)
 def run_discord_bot():
     @client.event
     async def on_ready():
-        client.guild_map[1075881043585937529] = Guild(1075881043585937529, client.get_chatbot_model()) # Test server guild
+        client.guild_map[1075881043585937529] = Guild(1075881043585937529,
+                                                      client.get_chatbot_model())  # Test server guild
         client.guild_map[1075881043585937529].reply_all_channel = "1093237764570484796"
         await client.tree.sync()
         logger.info(f'{client.user} is now running!')
@@ -23,7 +24,8 @@ def run_discord_bot():
         client.guild_map[guild.id] = Guild(guild.id, chatbot)
         logger.info(f"\x1b[31mNew Chatbot initialized for guild={guild.id}\x1b[0m")
 
-    @client.tree.command(name="save", description="Save the key details of the session to be loaded again at another time.")
+    @client.tree.command(name="save",
+                         description="Save the key details of the session to be loaded again at another time.")
     async def save_campaign(interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=False)
         guild = client.guild_map[interaction.guild_id]
@@ -39,11 +41,12 @@ def run_discord_bot():
         with open('saves/' + str(guild.id) + '.json', 'w') as f:
             json.dump(data, f)
             await interaction.followup.send("Campaign saved!")
-
+            
     @client.tree.command(name="load", description="Load the details of a previous session.")
     async def load_campaign(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=True)
+
         if interaction.user == client.user:
             return 
         # load data from json
@@ -63,28 +66,14 @@ def run_discord_bot():
         client.get_chatbot_model(guild.session_history) # Refreshes the campaign
         await interaction.response.send("Campaign loaded successfully!", ephemeral=guild.is_private)
 
-    @client.tree.command(name="initialize", description="Setup some basic info with the DM!")
-    async def initialize(interaction: discord.Interaction, *, reply_all_channel: str):
-        guild = client.guild_map[interaction.guild_id]
-        await interaction.response.defer(ephemeral=guild.is_private)
-        if reply_all_channel:
-            client.guild_map[interaction.guild_id].reply_all_channel = int(reply_all_channel)
-            await interaction.followup.send("Reply all channel set!")
-            logger.info(f"\x1b[31mReply all channel changed for guild={guild.id}\x1b[0m")
-        else:
-            await interaction.followup.send(
-                "> **Warn: Bad channel ID, please try again.**"
-            )
-            logger.warning(f"\x1b[31mBad channel ID for guild={guild.id}\x1b[0m")
-
-    @client.tree.command(name="chat", description="Have a chat with ChatGPT")
+    @client.tree.command(name="chat", description="Send a message to the Dungeon Master!")
     async def chat(interaction: discord.Interaction, *, user_input: str):
         guild = client.guild_map[interaction.guild_id]
         if guild.is_replying_all:
             await interaction.followup.defer(ephemeral=guild.is_private)
             await interaction.followup.send(
-                "> **Warn: Reply all mode is enabled. If you want to use slash command, switch to normal mode using `/replyall`**")
-            logger.warning("\x1b[31mYou already on replyAll mode, can't use slash command!\x1b[0m")
+                "> **Warn: Slash commands disabled in reply all mode. If you want to use slash command, switch to normal mode using `/replyall`**"
+            )
             return
         if interaction.user == client.user:
             return
@@ -94,68 +83,74 @@ def run_discord_bot():
             f"\x1b[31m{username}\x1b[0m : '{user_input}' ({channel})")
         await client.send_message(interaction, user_input)
 
-    @client.tree.command(name="private", description="Toggle private access")
+    @client.tree.command(name="private", description="Enable private mode!")
     async def private(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=guild.is_private)
         if not guild.is_private:
             guild.is_private = not guild.is_private
-            logger.warning("\x1b[31mSwitch to private mode\x1b[0m")
+            logger.warning(f"\x1b[31mSwitch to private mode in guild={guild.id}\x1b[0m")
             await interaction.followup.send(
-                "> **Info: Next, the response will be sent via private message. If you want to switch back to public mode, use `/public`**")
+                "> **Info: Responses are now private. If you want to switch back to public mode, use `/public`**"
+            )
         else:
-            logger.info("You already on private mode!")
             await interaction.followup.send(
-                "> **Warn: You already on private mode. If you want to switch to public mode, use `/public`**")
+                "> **Warn: You already on private mode. If you want to switch to public mode, use `/public`**"
+            )
 
-
-    @client.tree.command(name="public", description="Toggle public access")
+    @client.tree.command(name="public", description="Enable public mode!")
     async def public(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=guild.is_private)
         if guild.is_private:
             guild.is_private = not guild.is_private
             await interaction.followup.send(
-                "> **Info: Next, the response will be sent to the channel directly. If you want to switch back to private mode, use `/private`**")
-            logger.warning("\x1b[31mSwitch to public mode\x1b[0m")
+                "> **Info: Responses are now public. If you want to switch back to private mode, use `/private`**")
+            logger.warning(f"\x1b[31mSwitched to public mode in guild={guild.id}\x1b[0m")
         else:
             await interaction.followup.send(
                 "> **Warn: You already on public mode. If you want to switch to private mode, use `/private`**")
-            logger.info("You already on public mode!")
 
-    @client.tree.command(name="replyall", description="Toggle replyAll access")
-    async def replyall(interaction: discord.Interaction):
+    @client.tree.command(name="replyall", description="Enable reply all mode!")
+    async def replyall(interaction: discord.Interaction, reply_all_channel: str = ""):
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=guild.is_private)
+        # Optionally change reply all channel
+        if reply_all_channel != "":
+            guild.reply_all_channel = int(reply_all_channel)
+            logger.info(f"\x1b[31mReply all channel changed for guild={guild.id}\x1b[0m")
+        # Check if reply all channel exists
         if not guild.reply_all_channel:
             await interaction.followup.send(
-                "> **WARN: replyAll channel not set, please use /initialize to set a reply all channel**"
-            )
+                "> **WARN: replyAll channel not set, please use /initialize to set a reply all channel**")
             return
+        # Disable reply all mode
         if guild.is_replying_all:
             guild.is_replying_all = False
             await interaction.followup.send(
-                "> **INFO: Next, the bot will response to the Slash Command. If you want to switch back to replyAll mode, use `/replyAll` again**"
-            )
-            logger.warning(f"\x1b[31mSwitched to normal mode for guild={guild.id}\x1b[0m")
-        elif not guild.is_replying_all:
+                "> **INFO: Reply all mode disabled. If you want to switch back to replyAll mode, use `/replyall` again**")
+            logger.warning(f"\x1b[31mSwitch to normal mode in guild={guild.id}\x1b[0m")
+        # Enable reply all mode
+        else:
             guild.is_replying_all = True
             await interaction.followup.send(
-                "> **INFO: Next, the bot will disable Slash Command and responding to all message in this channel only. If you want to switch back to normal mode, use `/replyAll` again**")
-            logger.warning(f"\x1b[31mSwitch to reply all mode for guild={guild.id}\x1b[0m")
+                "> **INFO: Reply all mode enabled. If you want to switch back to normal mode, use `/replyall` again**")
+            logger.warning(f"\x1b[31mSwitch to replyAll mode in guild={guild.id}\x1b[0m")
 
-    @client.tree.command(name="reset", description="Complete reset ChatGPT conversation history")
-    async def reset(interaction: discord.Interaction):
+    @client.tree.command(name="reset",
+                         description="Reset ChatGPT conversation history and optionally give it a new starter prompt!")
+    async def reset(interaction: discord.Interaction, prompt: str = ""):
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=guild.is_private)
-        client.guild_map[interaction.guild_id].chatbot = client.get_chatbot_model()
-        await interaction.followup.send("> **Info: I have forgotten everything.**")
+        client.guild_map[interaction.guild_id].chatbot = client.get_chatbot_model(prompt)
+        await interaction.followup.send(
+            "> **Info: I have forgotten everything. If you gave a new prompt, your next /chat will be with the new Dungeon Master!**")
         logger.warning(
-            "\x1b[31mModel has been successfully reset\x1b[0m")
+            f"\x1b[31mModel has been successfully reset in guild={guild.id}\x1b[0m"
+        )
 
     @client.tree.command(name="roll", description="Roll XdY dice!")
     async def roll(interaction: discord.Interaction, count: int, sides: int):
-        response = ""
         if count <= 0 or sides <= 0:
             response = "Make sure that both count and sides are positive"
         else:
@@ -173,20 +168,25 @@ def run_discord_bot():
 
         await interaction.response.send(response)
 
-    @client.tree.command(name="help", description="Show help for the bot")
+
+    @client.tree.command(name="help", description="Show help message!")
     async def help(interaction: discord.Interaction):
         guild = client.guild_map[interaction.guild_id]
         await interaction.response.defer(ephemeral=guild.is_private)
-        await interaction.followup.send(""":star:**BASIC COMMANDS** \n
-        - `/chat [message]` Chat with ChatGPT!
-        - `/roll [<# of dice>d<# of faces>]` Roll dice! Format as 1d20, 3d6, etc.
-        - `/public` ChatGPT switch to public mode 
-        - `/private` ChatGPT switch to private mode
-        - `/replyall` ChatGPT switch between replyall mode and default mode
-        - `/reset` Clear ChatGPT conversation history\n
+        await interaction.followup.send(f"""**BASIC COMMANDS** \n
+        - `/chat [message]` {client.tree.get_command("chat").description}
+        - `/roll [<# of dice>d<# of faces>]` {client.tree.get_command("roll").description}
+        - `/save` {client.tree.get_command("save").description}
+        - `/load` {client.tree.get_command("load").description}
+        - `/public` {client.tree.get_command("public").description}
+        - `/private` {client.tree.get_command("private").description}
+        - `/replyall` {client.tree.get_command("replyall").description}
+        - `/reset` {client.tree.get_command("reset").description}
+        - `/help` Show this message! \n
         For complete documentation and some tips & tricks, please visit https://github.com/cis3296s23/applebaum-projects-07-discord-chatgpt""")
         logger.info(
-            f"\x1b[31mHelp command invoked in guild={guild.id}\x1b[0m")
+            f"\x1b[31mSomeone needs help in guild={guild.id}\x1b[0m"
+        )
 
     @client.event
     async def on_message(message):
