@@ -63,7 +63,10 @@ def run_discord_bot():
         guild.is_private = data['is_private']
         guild.reply_all_channel = data['reply_all_channel']
         guild.is_replying_all = data['is_replying_all']
-        client.get_chatbot_model(guild.session_history) # Refreshes the campaign
+        #creating prompt -> passing to chatbot initializer --> chatbot knows --> continue from there
+        prompt = client.prompt + ' The story so far is the following in quotes: \n "' + guild.session_history + "\""
+        guild.chatbot = client.get_chatbot_model(prompt)
+        
         await interaction.followup.send("Campaign loaded successfully!", ephemeral=guild.is_private)
 
     @client.tree.command(name="chat", description="Send a message to the Dungeon Master!")
