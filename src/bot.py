@@ -27,57 +27,44 @@ def run_discord_bot():
     @client.tree.command(name="save",
                          description="Save the key details of the session to be loaded again at another time.")
     async def save_campaign(interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=False)
         guild = client.guild_map[interaction.guild_id]
         if interaction.user == client.user:
-            return
-            # set up the json data
-        data = {'ID': interaction.guild_id,
-                'session_history': guild.session_history,
-                'is_private': guild.is_private,
-                'reply_all_channel': guild.replay_all_channel,
-                'is_replying_all': guild.is_replying_all}
+            return 
+        # set up the json data
+        data = {'guild_id': guild.id,
+                'session_history': guild.session_history, 
+                'is_private': guild.is_private, 
+                'reply_all_channel' : guild.reply_all_channel,
+                'is_replying_all' : guild.is_replying_all}
         # save to json
-        with open('saves/' + str(interaction.guild_id) + '.json', 'w') as f:
+        with open('saves/' + str(guild.id) + '.json', 'w') as f:
             json.dump(data, f)
+            await interaction.followup.send("Campaign saved!")
+            
+    @client.tree.command(name="load", description="Load the details of a previous session.")
+    async def load_campaign(interaction: discord.Interaction):
+        guild = client.guild_map[interaction.guild_id]
+        await interaction.response.defer(ephemeral=True)
 
-    # backup create version one
-    @client.tree.command(name="create", description="Creates the Story by generating the DND campaign")
-    async def create(interaction: discord.Interaction):
-        await interaction.response.defer(ephemeral=False)
         if interaction.user == client.user:
+            return 
+        # load data from json
+        try:
+            with open('saves/' + str(guild.id) + '.json', 'r') as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            await interaction.response.send("No save file found for this server!", ephemeral=guild.is_private)
+            logger.warning(f"\x1b[31mNo save file found for guild={guild.id}\x1b[0m")
             return
-        username = str(interaction.user)
-        prompt = "Begin a randomized simple Dungeon & Dragons campaign"
-        channel = str(interaction.channel)
-        logger.info(f"\x1b[31m{username}\x1b[0m : '{prompt}' ({channel})")
-        await send_message(interaction, prompt)
-
-    # backup continue version one
-    @client.tree.command(name="continue", description="Continues a given story")
-    async def prompt_continue(interaction: discord.Interaction, *, message: str):
-        await interaction.response.defer(ephemeral=False)
-        if interaction.user == client.user:
-            return
-        username = str(interaction.user)
-        prompt = "Continue the story based on this input and expand upon it: " + message
-        channel = str(interaction.channel)
-        logger.info(f"\x1b[31m{username}\x1b[0m : '{prompt}' ({channel})")
-        await send_message(interaction, prompt)
-
-        # @client.tree.command(name="initialize", description="Setup some basic info with the DM!")
-
-    # async def initialize(interaction: discord.Interaction, *, reply_all_channel: str):
-    #     guild = client.guild_map[interaction.guild_id]
-    #     await interaction.response.defer(ephemeral=guild.is_private)
-    #     if reply_all_channel:
-    #         client.guild_map[interaction.guild_id].reply_all_channel = int(reply_all_channel)
-    #         await interaction.followup.send("Reply all channel set!")
-    #         logger.info(f"\x1b[31mReply all channel changed for guild={guild.id}\x1b[0m")
-    #     else:
-    #         await interaction.followup.send(
-    #             "> **Warn: Bad channel ID, please try again.**"
-    #         )
-    #         logger.warning(f"\x1b[31mBad channel ID for guild={guild.id}\x1b[0m")
+        # set guild data from json
+        guild.id = data['guild_id']
+        guild.session_history = data['session_history']
+        guild.is_private = data['is_private']
+        guild.reply_all_channel = data['reply_all_channel']
+        guild.is_replying_all = data['is_replying_all']
+        client.get_chatbot_model(guild.session_history) # Refreshes the campaign
+        await interaction.response.send("Campaign loaded successfully!", ephemeral=guild.is_private)
 
     @client.tree.command(name="chat", description="Send a message to the Dungeon Master!")
     async def chat(interaction: discord.Interaction, *, user_input: str):
