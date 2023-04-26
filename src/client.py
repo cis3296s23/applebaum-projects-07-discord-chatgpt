@@ -1,11 +1,12 @@
 import os
+
 import discord
-import json
-from src import log
-from dotenv import load_dotenv
-from discord import app_commands
-from revChatGPT.V3 import Chatbot
 from asgiref.sync import sync_to_async
+from discord import app_commands
+from dotenv import load_dotenv
+from revChatGPT.V3 import Chatbot
+
+from src import log
 
 logger = log.setup_logger(__name__)
 load_dotenv()
@@ -100,9 +101,11 @@ class Client(discord.Client):
         except Exception as e:
             logger.exception(f"Error while sending system prompt: {e}")
 
-    def get_chatbot_model(self) -> Chatbot:
+    def get_chatbot_model(self, prompt: str="") -> Chatbot:
         """Instantiate and return a new OpenAI Chatbot object witht the default system prompt"""
-        return Chatbot(api_key=self.openAI_API_key, engine=self.openAI_gpt_engine, system_prompt=self.prompt)
+        if prompt == "":
+            prompt = self.prompt # Set the prompt = to the default prompt if none is given
+        return Chatbot(api_key=self.openAI_API_key, engine=self.openAI_gpt_engine, system_prompt=prompt)
 
 
 client = Client()
