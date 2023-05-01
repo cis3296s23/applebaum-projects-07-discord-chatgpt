@@ -176,6 +176,7 @@ def run_discord_bot():
     @client.tree.command(name="roll", description="Roll XdY dice!")
     async def roll(interaction: discord.Interaction, count: int, sides: int):
         """Roll XdY dice"""
+        await interaction.response.defer(ephemeral=guild.is_private)
         guild = client.guild_map[interaction.guild_id]
         if count <= 0 or sides <= 0:
             response = "Make sure that both count and sides are positive"
@@ -192,7 +193,7 @@ def run_discord_bot():
                 else:
                     response += " = " + str(sum(rolls))
 
-        await interaction.response.send(response, epehemeral=guild.is_private)
+        await interaction.followup.send(response, ephemeral=guild.is_private)
 
     @client.tree.command(name="help", description="Show help message!")
     async def help(interaction: discord.Interaction):
