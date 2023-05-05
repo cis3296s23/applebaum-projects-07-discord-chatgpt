@@ -1,0 +1,1166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module src.client</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="src.html"><font color="#ffffff">src</font></a>.client</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/ruuffian/code/school/4296/chatdd/src/client.py">/home/ruuffian/code/school/4296/chatdd/src/client.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="discord.app_commands.html">discord.app_commands</a><br>
+</td><td width="25%" valign=top><a href="discord.html">discord</a><br>
+</td><td width="25%" valign=top><a href="src.log.html">src.log</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="src.client.html#Guild">Guild</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="discord.client.html#Client">discord.client.Client</a>(<a href="builtins.html#object">builtins.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="src.client.html#Client">Client</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Client">class <strong>Client</strong></a>(<a href="discord.client.html#Client">discord.client.Client</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Client">Client</a>()&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+Instance&nbsp;of&nbsp;discord.<a href="#Client">Client</a>:&nbsp;the&nbsp;actual&nbsp;Bot<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="src.client.html#Client">Client</a></dd>
+<dd><a href="discord.client.html#Client">discord.client.Client</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Client-__init__"><strong>__init__</strong></a>(self) -&gt; None</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_chatbot_model"><strong>get_chatbot_model</strong></a>(self, prompt: str = '') -&gt; revChatGPT.V3.Chatbot</dt><dd><tt>Instantiate&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;OpenAI&nbsp;Chatbot&nbsp;<a href="builtins.html#object">object</a>&nbsp;witht&nbsp;the&nbsp;default&nbsp;system&nbsp;prompt</tt></dd></dl>
+
+<dl><dt>async <a name="Client-send_message"><strong>send_message</strong></a>(self, message: discord.interactions.Interaction, user_input)</dt><dd><tt>Takes&nbsp;a&nbsp;discord.Interaction&nbsp;and&nbsp;some&nbsp;user&nbsp;input,&nbsp;sends&nbsp;the&nbsp;input&nbsp;to&nbsp;ChatGPT,&nbsp;and&nbsp;formats&nbsp;+&nbsp;sends&nbsp;a&nbsp;response</tt></dd></dl>
+
+<dl><dt>async <a name="Client-send_start_prompt"><strong>send_start_prompt</strong></a>(self, interaction)</dt><dd><tt>Utility&nbsp;method&nbsp;to&nbsp;initialize&nbsp;a&nbsp;chatbot&nbsp;with&nbsp;a&nbsp;starting&nbsp;prompt&nbsp;--&nbsp;DEPRECATED</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="discord.client.html#Client">discord.client.Client</a>:<br>
+<dl><dt>async <a name="Client-__aenter__"><strong>__aenter__</strong></a>(self) -&gt; 'Self'</dt></dl>
+
+<dl><dt>async <a name="Client-__aexit__"><strong>__aexit__</strong></a>(self, exc_type: 'Optional[Type[BaseException]]', exc_value: 'Optional[BaseException]', traceback: 'Optional[TracebackType]') -&gt; 'None'</dt></dl>
+
+<dl><dt><a name="Client-add_view"><strong>add_view</strong></a>(self, view: 'View', *, message_id: 'Optional[int]' = None) -&gt; 'None'</dt><dd><tt>Registers&nbsp;a&nbsp;:class:`~discord.ui.View`&nbsp;for&nbsp;persistent&nbsp;listening.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;should&nbsp;be&nbsp;used&nbsp;for&nbsp;when&nbsp;a&nbsp;view&nbsp;is&nbsp;comprised&nbsp;of&nbsp;components<br>
+that&nbsp;last&nbsp;longer&nbsp;than&nbsp;the&nbsp;lifecycle&nbsp;of&nbsp;the&nbsp;program.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Parameters<br>
+------------<br>
+view:&nbsp;:class:`discord.ui.View`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;view&nbsp;to&nbsp;register&nbsp;for&nbsp;dispatching.<br>
+message_id:&nbsp;Optional[:class:`int`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;message&nbsp;ID&nbsp;that&nbsp;the&nbsp;view&nbsp;is&nbsp;attached&nbsp;to.&nbsp;This&nbsp;is&nbsp;currently&nbsp;used&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;refresh&nbsp;the&nbsp;view's&nbsp;state&nbsp;during&nbsp;message&nbsp;update&nbsp;events.&nbsp;If&nbsp;not&nbsp;given<br>
+&nbsp;&nbsp;&nbsp;&nbsp;then&nbsp;message&nbsp;update&nbsp;events&nbsp;are&nbsp;not&nbsp;propagated&nbsp;for&nbsp;the&nbsp;view.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+TypeError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;view&nbsp;was&nbsp;not&nbsp;passed.<br>
+ValueError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;view&nbsp;is&nbsp;not&nbsp;persistent&nbsp;or&nbsp;is&nbsp;already&nbsp;finished.&nbsp;A&nbsp;persistent&nbsp;view&nbsp;has&nbsp;no&nbsp;timeout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;their&nbsp;components&nbsp;have&nbsp;an&nbsp;explicitly&nbsp;provided&nbsp;custom_id.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-application_info"><strong>application_info</strong></a>(self) -&gt; 'AppInfo'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Retrieves&nbsp;the&nbsp;bot's&nbsp;application&nbsp;information.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieving&nbsp;the&nbsp;information&nbsp;failed&nbsp;somehow.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`.AppInfo`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;bot's&nbsp;application&nbsp;information.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-before_identify_hook"><strong>before_identify_hook</strong></a>(self, shard_id: 'Optional[int]', *, initial: 'bool' = False) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+A&nbsp;hook&nbsp;that&nbsp;is&nbsp;called&nbsp;before&nbsp;IDENTIFYing&nbsp;a&nbsp;session.&nbsp;This&nbsp;is&nbsp;useful<br>
+if&nbsp;you&nbsp;wish&nbsp;to&nbsp;have&nbsp;more&nbsp;control&nbsp;over&nbsp;the&nbsp;synchronization&nbsp;of&nbsp;multiple<br>
+IDENTIFYing&nbsp;clients.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;sleeps&nbsp;for&nbsp;5&nbsp;seconds.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;1.4<br>
+&nbsp;<br>
+Parameters<br>
+------------<br>
+shard_id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;shard&nbsp;ID&nbsp;that&nbsp;requested&nbsp;being&nbsp;IDENTIFY'd<br>
+initial:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;this&nbsp;IDENTIFY&nbsp;is&nbsp;the&nbsp;first&nbsp;initial&nbsp;IDENTIFY.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-change_presence"><strong>change_presence</strong></a>(self, *, activity: 'Optional[BaseActivity]' = None, status: 'Optional[Status]' = None) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;client's&nbsp;presence.<br>
+&nbsp;<br>
+Example<br>
+---------<br>
+&nbsp;<br>
+..&nbsp;code-block::&nbsp;python3<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;game&nbsp;=&nbsp;discord.Game("with&nbsp;the&nbsp;API")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;client.<a href="#Client-change_presence">change_presence</a>(status=discord.Status.idle,&nbsp;activity=game)<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Removed&nbsp;the&nbsp;``afk``&nbsp;keyword-only&nbsp;parameter.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;will&nbsp;now&nbsp;raise&nbsp;:exc:`TypeError`&nbsp;instead&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``InvalidArgument``.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+activity:&nbsp;Optional[:class:`.BaseActivity`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;activity&nbsp;being&nbsp;done.&nbsp;``None``&nbsp;if&nbsp;no&nbsp;currently&nbsp;active&nbsp;activity&nbsp;is&nbsp;done.<br>
+status:&nbsp;Optional[:class:`.Status`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Indicates&nbsp;what&nbsp;status&nbsp;to&nbsp;change&nbsp;to.&nbsp;If&nbsp;``None``,&nbsp;then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`.Status.online`&nbsp;is&nbsp;used.<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+TypeError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;``activity``&nbsp;parameter&nbsp;is&nbsp;not&nbsp;the&nbsp;proper&nbsp;type.</tt></dd></dl>
+
+<dl><dt><a name="Client-clear"><strong>clear</strong></a>(self) -&gt; 'None'</dt><dd><tt>Clears&nbsp;the&nbsp;internal&nbsp;state&nbsp;of&nbsp;the&nbsp;bot.<br>
+&nbsp;<br>
+After&nbsp;this,&nbsp;the&nbsp;bot&nbsp;can&nbsp;be&nbsp;considered&nbsp;"re-opened",&nbsp;i.e.&nbsp;:meth:`is_closed`<br>
+and&nbsp;:meth:`is_ready`&nbsp;both&nbsp;return&nbsp;``False``&nbsp;along&nbsp;with&nbsp;the&nbsp;bot's&nbsp;internal<br>
+cache&nbsp;cleared.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-close"><strong>close</strong></a>(self) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Closes&nbsp;the&nbsp;connection&nbsp;to&nbsp;Discord.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-connect"><strong>connect</strong></a>(self, *, reconnect: 'bool' = True) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;websocket&nbsp;connection&nbsp;and&nbsp;lets&nbsp;the&nbsp;websocket&nbsp;listen<br>
+to&nbsp;messages&nbsp;from&nbsp;Discord.&nbsp;This&nbsp;is&nbsp;a&nbsp;loop&nbsp;that&nbsp;runs&nbsp;the&nbsp;entire<br>
+event&nbsp;system&nbsp;and&nbsp;miscellaneous&nbsp;aspects&nbsp;of&nbsp;the&nbsp;library.&nbsp;Control<br>
+is&nbsp;not&nbsp;resumed&nbsp;until&nbsp;the&nbsp;WebSocket&nbsp;connection&nbsp;is&nbsp;terminated.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+reconnect:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;we&nbsp;should&nbsp;attempt&nbsp;reconnecting,&nbsp;either&nbsp;due&nbsp;to&nbsp;internet<br>
+&nbsp;&nbsp;&nbsp;&nbsp;failure&nbsp;or&nbsp;a&nbsp;specific&nbsp;failure&nbsp;on&nbsp;Discord's&nbsp;part.&nbsp;Certain<br>
+&nbsp;&nbsp;&nbsp;&nbsp;disconnects&nbsp;that&nbsp;lead&nbsp;to&nbsp;bad&nbsp;state&nbsp;will&nbsp;not&nbsp;be&nbsp;handled&nbsp;(such&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;invalid&nbsp;sharding&nbsp;payloads&nbsp;or&nbsp;bad&nbsp;tokens).<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+GatewayNotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;gateway&nbsp;to&nbsp;connect&nbsp;to&nbsp;Discord&nbsp;is&nbsp;not&nbsp;found.&nbsp;Usually&nbsp;if&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;thrown&nbsp;then&nbsp;there&nbsp;is&nbsp;a&nbsp;Discord&nbsp;API&nbsp;outage.<br>
+ConnectionClosed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;websocket&nbsp;connection&nbsp;has&nbsp;been&nbsp;terminated.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-create_dm"><strong>create_dm</strong></a>(self, user: 'Snowflake') -&gt; 'DMChannel'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;:class:`.DMChannel`&nbsp;with&nbsp;this&nbsp;user.<br>
+&nbsp;<br>
+This&nbsp;should&nbsp;be&nbsp;rarely&nbsp;called,&nbsp;as&nbsp;this&nbsp;is&nbsp;done&nbsp;transparently&nbsp;for&nbsp;most<br>
+people.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+user:&nbsp;:class:`~discord.abc.Snowflake`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;user&nbsp;to&nbsp;create&nbsp;a&nbsp;DM&nbsp;with.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+:class:`.DMChannel`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;channel&nbsp;that&nbsp;was&nbsp;created.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-create_guild"><strong>create_guild</strong></a>(self, *, name: 'str', icon: 'bytes' = ..., code: 'str' = ...) -&gt; 'Guild'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;:class:`.<a href="#Guild">Guild</a>`.<br>
+&nbsp;<br>
+Bot&nbsp;accounts&nbsp;in&nbsp;more&nbsp;than&nbsp;10&nbsp;guilds&nbsp;are&nbsp;not&nbsp;allowed&nbsp;to&nbsp;create&nbsp;guilds.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``name``&nbsp;and&nbsp;``icon``&nbsp;parameters&nbsp;are&nbsp;now&nbsp;keyword-only.&nbsp;The&nbsp;``region``&nbsp;parameter&nbsp;has&nbsp;been&nbsp;removed.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;will&nbsp;now&nbsp;raise&nbsp;:exc:`ValueError`&nbsp;instead&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``InvalidArgument``.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+name:&nbsp;:class:`str`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;guild.<br>
+icon:&nbsp;Optional[:class:`bytes`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;:term:`py:bytes-like&nbsp;<a href="builtins.html#object">object</a>`&nbsp;representing&nbsp;the&nbsp;icon.&nbsp;See&nbsp;:meth:`.ClientUser.edit`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;details&nbsp;on&nbsp;what&nbsp;is&nbsp;expected.<br>
+code:&nbsp;:class:`str`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;code&nbsp;for&nbsp;a&nbsp;template&nbsp;to&nbsp;create&nbsp;the&nbsp;guild&nbsp;with.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;1.4<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Guild">Guild</a>&nbsp;creation&nbsp;failed.<br>
+ValueError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Invalid&nbsp;icon&nbsp;image&nbsp;format&nbsp;given.&nbsp;Must&nbsp;be&nbsp;PNG&nbsp;or&nbsp;JPG.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+:class:`.<a href="#Guild">Guild</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;guild&nbsp;created.&nbsp;This&nbsp;is&nbsp;not&nbsp;the&nbsp;same&nbsp;guild&nbsp;that&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;added&nbsp;to&nbsp;cache.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-delete_invite"><strong>delete_invite</strong></a>(self, invite: 'Union[Invite, str]', /) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Revokes&nbsp;an&nbsp;:class:`.Invite`,&nbsp;URL,&nbsp;or&nbsp;ID&nbsp;to&nbsp;an&nbsp;invite.<br>
+&nbsp;<br>
+You&nbsp;must&nbsp;have&nbsp;:attr:`~.Permissions.manage_channels`&nbsp;in<br>
+the&nbsp;associated&nbsp;guild&nbsp;to&nbsp;do&nbsp;this.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``invite``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+invite:&nbsp;Union[:class:`.Invite`,&nbsp;:class:`str`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;invite&nbsp;to&nbsp;revoke.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+Forbidden<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;do&nbsp;not&nbsp;have&nbsp;permissions&nbsp;to&nbsp;revoke&nbsp;invites.<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;invite&nbsp;is&nbsp;invalid&nbsp;or&nbsp;expired.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Revoking&nbsp;the&nbsp;invite&nbsp;failed.</tt></dd></dl>
+
+<dl><dt><a name="Client-dispatch"><strong>dispatch</strong></a>(self, event: 'str', /, *args: 'Any', **kwargs: 'Any') -&gt; 'None'</dt></dl>
+
+<dl><dt><a name="Client-event"><strong>event</strong></a>(self, coro: 'CoroT', /) -&gt; 'CoroT'</dt><dd><tt>A&nbsp;decorator&nbsp;that&nbsp;registers&nbsp;an&nbsp;event&nbsp;to&nbsp;listen&nbsp;to.<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;find&nbsp;more&nbsp;info&nbsp;about&nbsp;the&nbsp;events&nbsp;on&nbsp;the&nbsp;:ref:`documentation&nbsp;below&nbsp;&lt;discord-api-events&gt;`.<br>
+&nbsp;<br>
+The&nbsp;events&nbsp;must&nbsp;be&nbsp;a&nbsp;:ref:`coroutine&nbsp;&lt;coroutine&gt;`,&nbsp;if&nbsp;not,&nbsp;:exc:`TypeError`&nbsp;is&nbsp;raised.<br>
+&nbsp;<br>
+Example<br>
+---------<br>
+&nbsp;<br>
+..&nbsp;code-block::&nbsp;python3<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@client.event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;async&nbsp;def&nbsp;on_ready():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print('Ready!')<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``coro``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Raises<br>
+--------<br>
+TypeError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;coroutine&nbsp;passed&nbsp;is&nbsp;not&nbsp;actually&nbsp;a&nbsp;coroutine.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_channel"><strong>fetch_channel</strong></a>(self, channel_id: 'int', /) -&gt; 'Union[GuildChannel, PrivateChannel, Thread]'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Retrieves&nbsp;a&nbsp;:class:`.abc.GuildChannel`,&nbsp;:class:`.abc.PrivateChannel`,&nbsp;or&nbsp;:class:`.Thread`&nbsp;with&nbsp;the&nbsp;specified&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;method&nbsp;is&nbsp;an&nbsp;API&nbsp;call.&nbsp;For&nbsp;general&nbsp;usage,&nbsp;consider&nbsp;:meth:`get_channel`&nbsp;instead.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;1.2<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``channel_id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+InvalidData<br>
+&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;unknown&nbsp;channel&nbsp;type&nbsp;was&nbsp;received&nbsp;from&nbsp;Discord.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieving&nbsp;the&nbsp;channel&nbsp;failed.<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Invalid&nbsp;Channel&nbsp;ID.<br>
+Forbidden<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;do&nbsp;not&nbsp;have&nbsp;permission&nbsp;to&nbsp;fetch&nbsp;this&nbsp;channel.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Union[:class:`.abc.GuildChannel`,&nbsp;:class:`.abc.PrivateChannel`,&nbsp;:class:`.Thread`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;channel&nbsp;from&nbsp;the&nbsp;ID.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_guild"><strong>fetch_guild</strong></a>(self, guild_id: 'int', /, *, with_counts: 'bool' = True) -&gt; 'Guild'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Retrieves&nbsp;a&nbsp;:class:`.<a href="#Guild">Guild</a>`&nbsp;from&nbsp;an&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Using&nbsp;this,&nbsp;you&nbsp;will&nbsp;**not**&nbsp;receive&nbsp;:attr:`.<a href="#Guild">Guild</a>.channels`,&nbsp;:attr:`.<a href="#Guild">Guild</a>.members`,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`.Member.activity`&nbsp;and&nbsp;:attr:`.Member.voice`&nbsp;per&nbsp;:class:`.Member`.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;method&nbsp;is&nbsp;an&nbsp;API&nbsp;call.&nbsp;For&nbsp;general&nbsp;usage,&nbsp;consider&nbsp;:meth:`get_guild`&nbsp;instead.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``guild_id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+guild_id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;guild's&nbsp;ID&nbsp;to&nbsp;fetch&nbsp;from.<br>
+with_counts:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;to&nbsp;include&nbsp;count&nbsp;information&nbsp;in&nbsp;the&nbsp;guild.&nbsp;This&nbsp;fills&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`.<a href="#Guild">Guild</a>.approximate_member_count`&nbsp;and&nbsp;:attr:`.<a href="#Guild">Guild</a>.approximate_presence_count`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;attributes&nbsp;without&nbsp;needing&nbsp;any&nbsp;privileged&nbsp;intents.&nbsp;Defaults&nbsp;to&nbsp;``True``.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+Forbidden<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;do&nbsp;not&nbsp;have&nbsp;access&nbsp;to&nbsp;the&nbsp;guild.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Getting&nbsp;the&nbsp;guild&nbsp;failed.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`.<a href="#Guild">Guild</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;guild&nbsp;from&nbsp;the&nbsp;ID.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_guilds"><strong>fetch_guilds</strong></a>(self, *, limit: 'Optional[int]' = 200, before: 'Optional[SnowflakeTime]' = None, after: 'Optional[SnowflakeTime]' = None) -&gt; 'AsyncIterator[Guild]'</dt><dd><tt>Retrieves&nbsp;an&nbsp;:term:`asynchronous&nbsp;iterator`&nbsp;that&nbsp;enables&nbsp;receiving&nbsp;your&nbsp;guilds.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Using&nbsp;this,&nbsp;you&nbsp;will&nbsp;only&nbsp;receive&nbsp;:attr:`.<a href="#Guild">Guild</a>.owner`,&nbsp;:attr:`.<a href="#Guild">Guild</a>.icon`,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`.<a href="#Guild">Guild</a>.id`,&nbsp;and&nbsp;:attr:`.<a href="#Guild">Guild</a>.name`&nbsp;per&nbsp;:class:`.<a href="#Guild">Guild</a>`.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;method&nbsp;is&nbsp;an&nbsp;API&nbsp;call.&nbsp;For&nbsp;general&nbsp;usage,&nbsp;consider&nbsp;:attr:`guilds`&nbsp;instead.<br>
+&nbsp;<br>
+Examples<br>
+---------<br>
+&nbsp;<br>
+Usage&nbsp;::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;async&nbsp;for&nbsp;guild&nbsp;in&nbsp;client.<a href="#Client-fetch_guilds">fetch_guilds</a>(limit=150):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(guild.name)<br>
+&nbsp;<br>
+Flattening&nbsp;into&nbsp;a&nbsp;list&nbsp;::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;guilds&nbsp;=&nbsp;[guild&nbsp;async&nbsp;for&nbsp;guild&nbsp;in&nbsp;client.<a href="#Client-fetch_guilds">fetch_guilds</a>(limit=150)]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;guilds&nbsp;is&nbsp;now&nbsp;a&nbsp;list&nbsp;of&nbsp;<a href="#Guild">Guild</a>...<br>
+&nbsp;<br>
+All&nbsp;parameters&nbsp;are&nbsp;optional.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+limit:&nbsp;Optional[:class:`int`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;guilds&nbsp;to&nbsp;retrieve.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;``None``,&nbsp;it&nbsp;retrieves&nbsp;every&nbsp;guild&nbsp;you&nbsp;have&nbsp;access&nbsp;to.&nbsp;Note,&nbsp;however,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;this&nbsp;would&nbsp;make&nbsp;it&nbsp;a&nbsp;slow&nbsp;operation.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Defaults&nbsp;to&nbsp;``200``.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;default&nbsp;has&nbsp;been&nbsp;changed&nbsp;to&nbsp;200.<br>
+&nbsp;<br>
+before:&nbsp;Union[:class:`.abc.Snowflake`,&nbsp;:class:`datetime.datetime`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieves&nbsp;guilds&nbsp;before&nbsp;this&nbsp;date&nbsp;or&nbsp;<a href="builtins.html#object">object</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;a&nbsp;datetime&nbsp;is&nbsp;provided,&nbsp;it&nbsp;is&nbsp;recommended&nbsp;to&nbsp;use&nbsp;a&nbsp;UTC&nbsp;aware&nbsp;datetime.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;datetime&nbsp;is&nbsp;naive,&nbsp;it&nbsp;is&nbsp;assumed&nbsp;to&nbsp;be&nbsp;local&nbsp;time.<br>
+after:&nbsp;Union[:class:`.abc.Snowflake`,&nbsp;:class:`datetime.datetime`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieve&nbsp;guilds&nbsp;after&nbsp;this&nbsp;date&nbsp;or&nbsp;<a href="builtins.html#object">object</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;a&nbsp;datetime&nbsp;is&nbsp;provided,&nbsp;it&nbsp;is&nbsp;recommended&nbsp;to&nbsp;use&nbsp;a&nbsp;UTC&nbsp;aware&nbsp;datetime.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;datetime&nbsp;is&nbsp;naive,&nbsp;it&nbsp;is&nbsp;assumed&nbsp;to&nbsp;be&nbsp;local&nbsp;time.<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Getting&nbsp;the&nbsp;guilds&nbsp;failed.<br>
+&nbsp;<br>
+Yields<br>
+--------<br>
+:class:`.<a href="#Guild">Guild</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;guild&nbsp;with&nbsp;the&nbsp;guild&nbsp;data&nbsp;parsed.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_invite"><strong>fetch_invite</strong></a>(self, url: 'Union[Invite, str]', *, with_counts: 'bool' = True, with_expiration: 'bool' = True, scheduled_event_id: 'Optional[int]' = None) -&gt; 'Invite'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Gets&nbsp;an&nbsp;:class:`.Invite`&nbsp;from&nbsp;a&nbsp;discord.gg&nbsp;URL&nbsp;or&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;invite&nbsp;is&nbsp;for&nbsp;a&nbsp;guild&nbsp;you&nbsp;have&nbsp;not&nbsp;joined,&nbsp;the&nbsp;guild&nbsp;and&nbsp;channel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;attributes&nbsp;of&nbsp;the&nbsp;returned&nbsp;:class:`.Invite`&nbsp;will&nbsp;be&nbsp;:class:`.PartialInviteGuild`&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:class:`.PartialInviteChannel`&nbsp;respectively.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+url:&nbsp;Union[:class:`.Invite`,&nbsp;:class:`str`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Discord&nbsp;invite&nbsp;ID&nbsp;or&nbsp;URL&nbsp;(must&nbsp;be&nbsp;a&nbsp;discord.gg&nbsp;URL).<br>
+with_counts:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;to&nbsp;include&nbsp;count&nbsp;information&nbsp;in&nbsp;the&nbsp;invite.&nbsp;This&nbsp;fills&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`.Invite.approximate_member_count`&nbsp;and&nbsp;:attr:`.Invite.approximate_presence_count`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fields.<br>
+with_expiration:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;to&nbsp;include&nbsp;the&nbsp;expiration&nbsp;date&nbsp;of&nbsp;the&nbsp;invite.&nbsp;This&nbsp;fills&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`.Invite.expires_at`&nbsp;field.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;2.0<br>
+scheduled_event_id:&nbsp;Optional[:class:`int`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ID&nbsp;of&nbsp;the&nbsp;scheduled&nbsp;event&nbsp;this&nbsp;invite&nbsp;is&nbsp;for.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;is&nbsp;not&nbsp;possible&nbsp;to&nbsp;provide&nbsp;a&nbsp;url&nbsp;that&nbsp;contains&nbsp;an&nbsp;``event_id``&nbsp;parameter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;using&nbsp;this&nbsp;parameter.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+ValueError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;url&nbsp;contains&nbsp;an&nbsp;``event_id``,&nbsp;but&nbsp;``scheduled_event_id``&nbsp;has&nbsp;also&nbsp;been&nbsp;provided.<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;invite&nbsp;has&nbsp;expired&nbsp;or&nbsp;is&nbsp;invalid.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Getting&nbsp;the&nbsp;invite&nbsp;failed.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`.Invite`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;invite&nbsp;from&nbsp;the&nbsp;URL/ID.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_premium_sticker_packs"><strong>fetch_premium_sticker_packs</strong></a>(self) -&gt; 'List[StickerPack]'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Retrieves&nbsp;all&nbsp;available&nbsp;premium&nbsp;sticker&nbsp;packs.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieving&nbsp;the&nbsp;sticker&nbsp;packs&nbsp;failed.<br>
+&nbsp;<br>
+Returns<br>
+---------<br>
+List[:class:`.StickerPack`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;All&nbsp;available&nbsp;premium&nbsp;sticker&nbsp;packs.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_stage_instance"><strong>fetch_stage_instance</strong></a>(self, channel_id: 'int', /) -&gt; 'StageInstance'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Gets&nbsp;a&nbsp;:class:`.StageInstance`&nbsp;for&nbsp;a&nbsp;stage&nbsp;channel&nbsp;id.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+channel_id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;stage&nbsp;channel&nbsp;ID.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;stage&nbsp;instance&nbsp;or&nbsp;channel&nbsp;could&nbsp;not&nbsp;be&nbsp;found.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Getting&nbsp;the&nbsp;stage&nbsp;instance&nbsp;failed.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`.StageInstance`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;stage&nbsp;instance&nbsp;from&nbsp;the&nbsp;stage&nbsp;channel&nbsp;ID.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_sticker"><strong>fetch_sticker</strong></a>(self, sticker_id: 'int', /) -&gt; 'Union[StandardSticker, GuildSticker]'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Retrieves&nbsp;a&nbsp;:class:`.Sticker`&nbsp;with&nbsp;the&nbsp;specified&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Raises<br>
+--------<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieving&nbsp;the&nbsp;sticker&nbsp;failed.<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Invalid&nbsp;sticker&nbsp;ID.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Union[:class:`.StandardSticker`,&nbsp;:class:`.GuildSticker`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;sticker&nbsp;you&nbsp;requested.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_template"><strong>fetch_template</strong></a>(self, code: 'Union[Template, str]') -&gt; 'Template'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Gets&nbsp;a&nbsp;:class:`.Template`&nbsp;from&nbsp;a&nbsp;discord.new&nbsp;URL&nbsp;or&nbsp;code.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+code:&nbsp;Union[:class:`.Template`,&nbsp;:class:`str`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Discord&nbsp;Template&nbsp;Code&nbsp;or&nbsp;URL&nbsp;(must&nbsp;be&nbsp;a&nbsp;discord.new&nbsp;URL).<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;template&nbsp;is&nbsp;invalid.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Getting&nbsp;the&nbsp;template&nbsp;failed.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`.Template`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;template&nbsp;from&nbsp;the&nbsp;URL/code.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_user"><strong>fetch_user</strong></a>(self, user_id: 'int', /) -&gt; 'User'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Retrieves&nbsp;a&nbsp;:class:`~discord.User`&nbsp;based&nbsp;on&nbsp;their&nbsp;ID.<br>
+You&nbsp;do&nbsp;not&nbsp;have&nbsp;to&nbsp;share&nbsp;any&nbsp;guilds&nbsp;with&nbsp;the&nbsp;user&nbsp;to&nbsp;get&nbsp;this&nbsp;information,<br>
+however&nbsp;many&nbsp;operations&nbsp;do&nbsp;require&nbsp;that&nbsp;you&nbsp;do.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;method&nbsp;is&nbsp;an&nbsp;API&nbsp;call.&nbsp;If&nbsp;you&nbsp;have&nbsp;:attr:`discord.Intents.members`&nbsp;and&nbsp;member&nbsp;cache&nbsp;enabled,&nbsp;consider&nbsp;:meth:`get_user`&nbsp;instead.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``user_id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+user_id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;user's&nbsp;ID&nbsp;to&nbsp;fetch&nbsp;from.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;user&nbsp;with&nbsp;this&nbsp;ID&nbsp;does&nbsp;not&nbsp;exist.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Fetching&nbsp;the&nbsp;user&nbsp;failed.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`~discord.User`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;user&nbsp;you&nbsp;requested.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_webhook"><strong>fetch_webhook</strong></a>(self, webhook_id: 'int', /) -&gt; 'Webhook'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Retrieves&nbsp;a&nbsp;:class:`.Webhook`&nbsp;with&nbsp;the&nbsp;specified&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``webhook_id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Raises<br>
+--------<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieving&nbsp;the&nbsp;webhook&nbsp;failed.<br>
+NotFound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Invalid&nbsp;webhook&nbsp;ID.<br>
+Forbidden<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;do&nbsp;not&nbsp;have&nbsp;permission&nbsp;to&nbsp;fetch&nbsp;this&nbsp;webhook.<br>
+&nbsp;<br>
+Returns<br>
+---------<br>
+:class:`.Webhook`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;webhook&nbsp;you&nbsp;requested.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-fetch_widget"><strong>fetch_widget</strong></a>(self, guild_id: 'int', /) -&gt; 'Widget'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Gets&nbsp;a&nbsp;:class:`.Widget`&nbsp;from&nbsp;a&nbsp;guild&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;guild&nbsp;must&nbsp;have&nbsp;the&nbsp;widget&nbsp;enabled&nbsp;to&nbsp;get&nbsp;this&nbsp;information.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``guild_id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+guild_id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ID&nbsp;of&nbsp;the&nbsp;guild.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+Forbidden<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;widget&nbsp;for&nbsp;this&nbsp;guild&nbsp;is&nbsp;disabled.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Retrieving&nbsp;the&nbsp;widget&nbsp;failed.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`.Widget`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;guild's&nbsp;widget.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_all_channels"><strong>get_all_channels</strong></a>(self) -&gt; 'Generator[GuildChannel, None, None]'</dt><dd><tt>A&nbsp;generator&nbsp;that&nbsp;retrieves&nbsp;every&nbsp;:class:`.abc.GuildChannel`&nbsp;the&nbsp;client&nbsp;can&nbsp;'access'.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;equivalent&nbsp;to:&nbsp;::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;guild&nbsp;in&nbsp;client.guilds:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;channel&nbsp;in&nbsp;guild.channels:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yield&nbsp;channel<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Just&nbsp;because&nbsp;you&nbsp;receive&nbsp;a&nbsp;:class:`.abc.GuildChannel`&nbsp;does&nbsp;not&nbsp;mean&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;can&nbsp;communicate&nbsp;in&nbsp;said&nbsp;channel.&nbsp;:meth:`.abc.GuildChannel.permissions_for`&nbsp;should<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;used&nbsp;for&nbsp;that.<br>
+&nbsp;<br>
+Yields<br>
+------<br>
+:class:`.abc.GuildChannel`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;channel&nbsp;the&nbsp;client&nbsp;can&nbsp;'access'.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_all_members"><strong>get_all_members</strong></a>(self) -&gt; 'Generator[Member, None, None]'</dt><dd><tt>Returns&nbsp;a&nbsp;generator&nbsp;with&nbsp;every&nbsp;:class:`.Member`&nbsp;the&nbsp;client&nbsp;can&nbsp;see.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;equivalent&nbsp;to:&nbsp;::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;guild&nbsp;in&nbsp;client.guilds:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;member&nbsp;in&nbsp;guild.members:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yield&nbsp;member<br>
+&nbsp;<br>
+Yields<br>
+------<br>
+:class:`.Member`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;member&nbsp;the&nbsp;client&nbsp;can&nbsp;see.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_channel"><strong>get_channel</strong></a>(self, id: 'int', /) -&gt; 'Optional[Union[GuildChannel, Thread, PrivateChannel]]'</dt><dd><tt>Returns&nbsp;a&nbsp;channel&nbsp;or&nbsp;thread&nbsp;with&nbsp;the&nbsp;given&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ID&nbsp;to&nbsp;search&nbsp;for.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Optional[Union[:class:`.abc.GuildChannel`,&nbsp;:class:`.Thread`,&nbsp;:class:`.abc.PrivateChannel`]]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;returned&nbsp;channel&nbsp;or&nbsp;``None``&nbsp;if&nbsp;not&nbsp;found.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_emoji"><strong>get_emoji</strong></a>(self, id: 'int', /) -&gt; 'Optional[Emoji]'</dt><dd><tt>Returns&nbsp;an&nbsp;emoji&nbsp;with&nbsp;the&nbsp;given&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ID&nbsp;to&nbsp;search&nbsp;for.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Optional[:class:`.Emoji`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;custom&nbsp;emoji&nbsp;or&nbsp;``None``&nbsp;if&nbsp;not&nbsp;found.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_guild"><strong>get_guild</strong></a>(self, id: 'int', /) -&gt; 'Optional[Guild]'</dt><dd><tt>Returns&nbsp;a&nbsp;guild&nbsp;with&nbsp;the&nbsp;given&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ID&nbsp;to&nbsp;search&nbsp;for.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Optional[:class:`.<a href="#Guild">Guild</a>`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;guild&nbsp;or&nbsp;``None``&nbsp;if&nbsp;not&nbsp;found.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_partial_messageable"><strong>get_partial_messageable</strong></a>(self, id: 'int', *, guild_id: 'Optional[int]' = None, type: 'Optional[ChannelType]' = None) -&gt; 'PartialMessageable'</dt><dd><tt>Returns&nbsp;a&nbsp;partial&nbsp;messageable&nbsp;with&nbsp;the&nbsp;given&nbsp;channel&nbsp;ID.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;useful&nbsp;if&nbsp;you&nbsp;have&nbsp;a&nbsp;channel_id&nbsp;but&nbsp;don't&nbsp;want&nbsp;to&nbsp;do&nbsp;an&nbsp;API&nbsp;call<br>
+to&nbsp;send&nbsp;messages&nbsp;to&nbsp;it.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;channel&nbsp;ID&nbsp;to&nbsp;create&nbsp;a&nbsp;partial&nbsp;messageable&nbsp;for.<br>
+guild_id:&nbsp;Optional[:class:`int`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;optional&nbsp;guild&nbsp;ID&nbsp;to&nbsp;create&nbsp;a&nbsp;partial&nbsp;messageable&nbsp;for.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;not&nbsp;required&nbsp;to&nbsp;actually&nbsp;send&nbsp;messages,&nbsp;but&nbsp;it&nbsp;does&nbsp;allow&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:meth:`~discord.PartialMessageable.jump_url`&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`~discord.PartialMessageable.guild`&nbsp;properties&nbsp;to&nbsp;function&nbsp;properly.<br>
+type:&nbsp;Optional[:class:`.ChannelType`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;underlying&nbsp;channel&nbsp;type&nbsp;for&nbsp;the&nbsp;partial&nbsp;messageable.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+:class:`.PartialMessageable`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;partial&nbsp;messageable</tt></dd></dl>
+
+<dl><dt><a name="Client-get_stage_instance"><strong>get_stage_instance</strong></a>(self, id: 'int', /) -&gt; 'Optional[StageInstance]'</dt><dd><tt>Returns&nbsp;a&nbsp;stage&nbsp;instance&nbsp;with&nbsp;the&nbsp;given&nbsp;stage&nbsp;channel&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ID&nbsp;to&nbsp;search&nbsp;for.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Optional[:class:`.StageInstance`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;stage&nbsp;instance&nbsp;or&nbsp;``None``&nbsp;if&nbsp;not&nbsp;found.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_sticker"><strong>get_sticker</strong></a>(self, id: 'int', /) -&gt; 'Optional[GuildSticker]'</dt><dd><tt>Returns&nbsp;a&nbsp;guild&nbsp;sticker&nbsp;with&nbsp;the&nbsp;given&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;retrieve&nbsp;standard&nbsp;stickers,&nbsp;use&nbsp;:meth:`.fetch_sticker`.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;:meth:`.fetch_premium_sticker_packs`.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Optional[:class:`.GuildSticker`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;sticker&nbsp;or&nbsp;``None``&nbsp;if&nbsp;not&nbsp;found.</tt></dd></dl>
+
+<dl><dt><a name="Client-get_user"><strong>get_user</strong></a>(self, id: 'int', /) -&gt; 'Optional[User]'</dt><dd><tt>Returns&nbsp;a&nbsp;user&nbsp;with&nbsp;the&nbsp;given&nbsp;ID.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``id``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+id:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;ID&nbsp;to&nbsp;search&nbsp;for.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Optional[:class:`~discord.User`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;user&nbsp;or&nbsp;``None``&nbsp;if&nbsp;not&nbsp;found.</tt></dd></dl>
+
+<dl><dt><a name="Client-is_closed"><strong>is_closed</strong></a>(self) -&gt; 'bool'</dt><dd><tt>:class:`bool`:&nbsp;Indicates&nbsp;if&nbsp;the&nbsp;websocket&nbsp;connection&nbsp;is&nbsp;closed.</tt></dd></dl>
+
+<dl><dt><a name="Client-is_ready"><strong>is_ready</strong></a>(self) -&gt; 'bool'</dt><dd><tt>:class:`bool`:&nbsp;Specifies&nbsp;if&nbsp;the&nbsp;client's&nbsp;internal&nbsp;cache&nbsp;is&nbsp;ready&nbsp;for&nbsp;use.</tt></dd></dl>
+
+<dl><dt><a name="Client-is_ws_ratelimited"><strong>is_ws_ratelimited</strong></a>(self) -&gt; 'bool'</dt><dd><tt>:class:`bool`:&nbsp;Whether&nbsp;the&nbsp;websocket&nbsp;is&nbsp;currently&nbsp;rate&nbsp;limited.<br>
+&nbsp;<br>
+This&nbsp;can&nbsp;be&nbsp;useful&nbsp;to&nbsp;know&nbsp;when&nbsp;deciding&nbsp;whether&nbsp;you&nbsp;should&nbsp;query&nbsp;members<br>
+using&nbsp;HTTP&nbsp;or&nbsp;via&nbsp;the&nbsp;gateway.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;1.6</tt></dd></dl>
+
+<dl><dt>async <a name="Client-login"><strong>login</strong></a>(self, token: 'str') -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Logs&nbsp;in&nbsp;the&nbsp;client&nbsp;with&nbsp;the&nbsp;specified&nbsp;credentials&nbsp;and<br>
+calls&nbsp;the&nbsp;:meth:`setup_hook`.<br>
+&nbsp;<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+token:&nbsp;:class:`str`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;authentication&nbsp;token.&nbsp;Do&nbsp;not&nbsp;prefix&nbsp;this&nbsp;token&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;as&nbsp;the&nbsp;library&nbsp;will&nbsp;do&nbsp;it&nbsp;for&nbsp;you.<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+LoginFailure<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;wrong&nbsp;credentials&nbsp;are&nbsp;passed.<br>
+HTTPException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;unknown&nbsp;HTTP&nbsp;related&nbsp;error&nbsp;occurred,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;usually&nbsp;when&nbsp;it&nbsp;isn't&nbsp;200&nbsp;or&nbsp;the&nbsp;known&nbsp;incorrect&nbsp;credentials<br>
+&nbsp;&nbsp;&nbsp;&nbsp;passing&nbsp;status&nbsp;code.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-on_error"><strong>on_error</strong></a>(self, event_method: 'str', /, *args: 'Any', **kwargs: 'Any') -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;error&nbsp;handler&nbsp;provided&nbsp;by&nbsp;the&nbsp;client.<br>
+&nbsp;<br>
+By&nbsp;default&nbsp;this&nbsp;logs&nbsp;to&nbsp;the&nbsp;library&nbsp;logger&nbsp;however&nbsp;it&nbsp;could&nbsp;be<br>
+overridden&nbsp;to&nbsp;have&nbsp;a&nbsp;different&nbsp;implementation.<br>
+Check&nbsp;:func:`~discord.on_error`&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``event_method``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;instead&nbsp;of&nbsp;writing&nbsp;to&nbsp;``sys.stderr``&nbsp;it&nbsp;logs&nbsp;instead.</tt></dd></dl>
+
+<dl><dt><a name="Client-run"><strong>run</strong></a>(self, token: 'str', *, reconnect: 'bool' = True, log_handler: 'Optional[logging.Handler]' = ..., log_formatter: 'logging.Formatter' = ..., log_level: 'int' = ..., root_logger: 'bool' = False) -&gt; 'None'</dt><dd><tt>A&nbsp;blocking&nbsp;call&nbsp;that&nbsp;abstracts&nbsp;away&nbsp;the&nbsp;event&nbsp;loop<br>
+initialisation&nbsp;from&nbsp;you.<br>
+&nbsp;<br>
+If&nbsp;you&nbsp;want&nbsp;more&nbsp;control&nbsp;over&nbsp;the&nbsp;event&nbsp;loop&nbsp;then&nbsp;this<br>
+function&nbsp;should&nbsp;not&nbsp;be&nbsp;used.&nbsp;Use&nbsp;:meth:`start`&nbsp;coroutine<br>
+or&nbsp;:meth:`connect`&nbsp;+&nbsp;:meth:`login`.<br>
+&nbsp;<br>
+This&nbsp;function&nbsp;also&nbsp;sets&nbsp;up&nbsp;the&nbsp;logging&nbsp;library&nbsp;to&nbsp;make&nbsp;it&nbsp;easier<br>
+for&nbsp;beginners&nbsp;to&nbsp;know&nbsp;what&nbsp;is&nbsp;going&nbsp;on&nbsp;with&nbsp;the&nbsp;library.&nbsp;For&nbsp;more<br>
+advanced&nbsp;users,&nbsp;this&nbsp;can&nbsp;be&nbsp;disabled&nbsp;by&nbsp;passing&nbsp;``None``&nbsp;to<br>
+the&nbsp;``log_handler``&nbsp;parameter.<br>
+&nbsp;<br>
+..&nbsp;warning::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;must&nbsp;be&nbsp;the&nbsp;last&nbsp;function&nbsp;to&nbsp;call&nbsp;due&nbsp;to&nbsp;the&nbsp;fact&nbsp;that&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;blocking.&nbsp;That&nbsp;means&nbsp;that&nbsp;registration&nbsp;of&nbsp;events&nbsp;or&nbsp;anything&nbsp;being<br>
+&nbsp;&nbsp;&nbsp;&nbsp;called&nbsp;after&nbsp;this&nbsp;function&nbsp;call&nbsp;will&nbsp;not&nbsp;execute&nbsp;until&nbsp;it&nbsp;returns.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+token:&nbsp;:class:`str`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;authentication&nbsp;token.&nbsp;Do&nbsp;not&nbsp;prefix&nbsp;this&nbsp;token&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;as&nbsp;the&nbsp;library&nbsp;will&nbsp;do&nbsp;it&nbsp;for&nbsp;you.<br>
+reconnect:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;we&nbsp;should&nbsp;attempt&nbsp;reconnecting,&nbsp;either&nbsp;due&nbsp;to&nbsp;internet<br>
+&nbsp;&nbsp;&nbsp;&nbsp;failure&nbsp;or&nbsp;a&nbsp;specific&nbsp;failure&nbsp;on&nbsp;Discord's&nbsp;part.&nbsp;Certain<br>
+&nbsp;&nbsp;&nbsp;&nbsp;disconnects&nbsp;that&nbsp;lead&nbsp;to&nbsp;bad&nbsp;state&nbsp;will&nbsp;not&nbsp;be&nbsp;handled&nbsp;(such&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;invalid&nbsp;sharding&nbsp;payloads&nbsp;or&nbsp;bad&nbsp;tokens).<br>
+log_handler:&nbsp;Optional[:class:`logging.Handler`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;log&nbsp;handler&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;library's&nbsp;logger.&nbsp;If&nbsp;this&nbsp;is&nbsp;``None``<br>
+&nbsp;&nbsp;&nbsp;&nbsp;then&nbsp;the&nbsp;library&nbsp;will&nbsp;not&nbsp;set&nbsp;up&nbsp;anything&nbsp;logging&nbsp;related.&nbsp;Logging<br>
+&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;still&nbsp;work&nbsp;if&nbsp;``None``&nbsp;is&nbsp;passed,&nbsp;though&nbsp;it&nbsp;is&nbsp;your&nbsp;responsibility<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;set&nbsp;it&nbsp;up.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;default&nbsp;log&nbsp;handler&nbsp;if&nbsp;not&nbsp;provided&nbsp;is&nbsp;:class:`logging.StreamHandler`.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;2.0<br>
+log_formatter:&nbsp;:class:`logging.Formatter`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;formatter&nbsp;to&nbsp;use&nbsp;with&nbsp;the&nbsp;given&nbsp;log&nbsp;handler.&nbsp;If&nbsp;not&nbsp;provided&nbsp;then&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defaults&nbsp;to&nbsp;a&nbsp;colour&nbsp;based&nbsp;logging&nbsp;formatter&nbsp;(if&nbsp;available).<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;2.0<br>
+log_level:&nbsp;:class:`int`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;default&nbsp;log&nbsp;level&nbsp;for&nbsp;the&nbsp;library's&nbsp;logger.&nbsp;This&nbsp;is&nbsp;only&nbsp;applied&nbsp;if&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``log_handler``&nbsp;parameter&nbsp;is&nbsp;not&nbsp;``None``.&nbsp;Defaults&nbsp;to&nbsp;``logging.INFO``.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;2.0<br>
+root_logger:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;to&nbsp;set&nbsp;up&nbsp;the&nbsp;root&nbsp;logger&nbsp;rather&nbsp;than&nbsp;the&nbsp;library&nbsp;logger.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;By&nbsp;default,&nbsp;only&nbsp;the&nbsp;library&nbsp;logger&nbsp;(``'discord'``)&nbsp;is&nbsp;set&nbsp;up.&nbsp;If&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;set&nbsp;to&nbsp;``True``&nbsp;then&nbsp;the&nbsp;root&nbsp;logger&nbsp;is&nbsp;set&nbsp;up&nbsp;as&nbsp;well.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Defaults&nbsp;to&nbsp;``False``.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;2.0</tt></dd></dl>
+
+<dl><dt>async <a name="Client-setup_hook"><strong>setup_hook</strong></a>(self) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+A&nbsp;coroutine&nbsp;to&nbsp;be&nbsp;called&nbsp;to&nbsp;setup&nbsp;the&nbsp;bot,&nbsp;by&nbsp;default&nbsp;this&nbsp;is&nbsp;blank.<br>
+&nbsp;<br>
+To&nbsp;perform&nbsp;asynchronous&nbsp;setup&nbsp;after&nbsp;the&nbsp;bot&nbsp;is&nbsp;logged&nbsp;in&nbsp;but&nbsp;before<br>
+it&nbsp;has&nbsp;connected&nbsp;to&nbsp;the&nbsp;Websocket,&nbsp;overwrite&nbsp;this&nbsp;coroutine.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;only&nbsp;called&nbsp;once,&nbsp;in&nbsp;:meth:`login`,&nbsp;and&nbsp;will&nbsp;be&nbsp;called&nbsp;before<br>
+any&nbsp;events&nbsp;are&nbsp;dispatched,&nbsp;making&nbsp;it&nbsp;a&nbsp;better&nbsp;solution&nbsp;than&nbsp;doing&nbsp;such<br>
+setup&nbsp;in&nbsp;the&nbsp;:func:`~discord.on_ready`&nbsp;event.<br>
+&nbsp;<br>
+..&nbsp;warning::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Since&nbsp;this&nbsp;is&nbsp;called&nbsp;*before*&nbsp;the&nbsp;websocket&nbsp;connection&nbsp;is&nbsp;made&nbsp;therefore<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;that&nbsp;waits&nbsp;for&nbsp;the&nbsp;websocket&nbsp;will&nbsp;deadlock,&nbsp;this&nbsp;includes&nbsp;things<br>
+&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;:meth:`wait_for`&nbsp;and&nbsp;:meth:`wait_until_ready`.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0</tt></dd></dl>
+
+<dl><dt>async <a name="Client-start"><strong>start</strong></a>(self, token: 'str', *, reconnect: 'bool' = True) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+A&nbsp;shorthand&nbsp;coroutine&nbsp;for&nbsp;:meth:`login`&nbsp;+&nbsp;:meth:`connect`.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+token:&nbsp;:class:`str`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;authentication&nbsp;token.&nbsp;Do&nbsp;not&nbsp;prefix&nbsp;this&nbsp;token&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;as&nbsp;the&nbsp;library&nbsp;will&nbsp;do&nbsp;it&nbsp;for&nbsp;you.<br>
+reconnect:&nbsp;:class:`bool`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;we&nbsp;should&nbsp;attempt&nbsp;reconnecting,&nbsp;either&nbsp;due&nbsp;to&nbsp;internet<br>
+&nbsp;&nbsp;&nbsp;&nbsp;failure&nbsp;or&nbsp;a&nbsp;specific&nbsp;failure&nbsp;on&nbsp;Discord's&nbsp;part.&nbsp;Certain<br>
+&nbsp;&nbsp;&nbsp;&nbsp;disconnects&nbsp;that&nbsp;lead&nbsp;to&nbsp;bad&nbsp;state&nbsp;will&nbsp;not&nbsp;be&nbsp;handled&nbsp;(such&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;invalid&nbsp;sharding&nbsp;payloads&nbsp;or&nbsp;bad&nbsp;tokens).<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+TypeError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;unexpected&nbsp;keyword&nbsp;argument&nbsp;was&nbsp;received.</tt></dd></dl>
+
+<dl><dt><a name="Client-wait_for"><strong>wait_for</strong></a>(self, event: 'str', /, *, check: 'Optional[Callable[..., bool]]' = None, timeout: 'Optional[float]' = None) -&gt; 'Coro[Any]'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Waits&nbsp;for&nbsp;a&nbsp;WebSocket&nbsp;event&nbsp;to&nbsp;be&nbsp;dispatched.<br>
+&nbsp;<br>
+This&nbsp;could&nbsp;be&nbsp;used&nbsp;to&nbsp;wait&nbsp;for&nbsp;a&nbsp;user&nbsp;to&nbsp;reply&nbsp;to&nbsp;a&nbsp;message,<br>
+or&nbsp;to&nbsp;react&nbsp;to&nbsp;a&nbsp;message,&nbsp;or&nbsp;to&nbsp;edit&nbsp;a&nbsp;message&nbsp;in&nbsp;a&nbsp;self-contained<br>
+way.<br>
+&nbsp;<br>
+The&nbsp;``timeout``&nbsp;parameter&nbsp;is&nbsp;passed&nbsp;onto&nbsp;:func:`asyncio.wait_for`.&nbsp;By&nbsp;default,<br>
+it&nbsp;does&nbsp;not&nbsp;timeout.&nbsp;Note&nbsp;that&nbsp;this&nbsp;does&nbsp;propagate&nbsp;the<br>
+:exc:`asyncio.TimeoutError`&nbsp;for&nbsp;you&nbsp;in&nbsp;case&nbsp;of&nbsp;timeout&nbsp;and&nbsp;is&nbsp;provided&nbsp;for<br>
+ease&nbsp;of&nbsp;use.<br>
+&nbsp;<br>
+In&nbsp;case&nbsp;the&nbsp;event&nbsp;returns&nbsp;multiple&nbsp;arguments,&nbsp;a&nbsp;:class:`tuple`&nbsp;containing&nbsp;those<br>
+arguments&nbsp;is&nbsp;returned&nbsp;instead.&nbsp;Please&nbsp;check&nbsp;the<br>
+:ref:`documentation&nbsp;&lt;discord-api-events&gt;`&nbsp;for&nbsp;a&nbsp;list&nbsp;of&nbsp;events&nbsp;and&nbsp;their<br>
+parameters.<br>
+&nbsp;<br>
+This&nbsp;function&nbsp;returns&nbsp;the&nbsp;**first&nbsp;event&nbsp;that&nbsp;meets&nbsp;the&nbsp;requirements**.<br>
+&nbsp;<br>
+Examples<br>
+---------<br>
+&nbsp;<br>
+Waiting&nbsp;for&nbsp;a&nbsp;user&nbsp;reply:&nbsp;::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@client.event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;async&nbsp;def&nbsp;on_message(message):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;message.content.startswith('$greet'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;channel&nbsp;=&nbsp;message.channel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;channel.send('Say&nbsp;hello!')<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;check(m):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;m.content&nbsp;==&nbsp;'hello'&nbsp;and&nbsp;m.channel&nbsp;==&nbsp;channel<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg&nbsp;=&nbsp;await&nbsp;client.<a href="#Client-wait_for">wait_for</a>('message',&nbsp;check=check)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;channel.send(f'Hello&nbsp;{msg.author}!')<br>
+&nbsp;<br>
+Waiting&nbsp;for&nbsp;a&nbsp;thumbs&nbsp;up&nbsp;reaction&nbsp;from&nbsp;the&nbsp;message&nbsp;author:&nbsp;::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@client.event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;async&nbsp;def&nbsp;on_message(message):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;message.content.startswith('$thumb'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;channel&nbsp;=&nbsp;message.channel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;channel.send('Send&nbsp;me&nbsp;that&nbsp;👍&nbsp;reaction,&nbsp;mate')<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;check(reaction,&nbsp;user):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;user&nbsp;==&nbsp;message.author&nbsp;and&nbsp;str(reaction.emoji)&nbsp;==&nbsp;'👍'<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reaction,&nbsp;user&nbsp;=&nbsp;await&nbsp;client.<a href="#Client-wait_for">wait_for</a>('reaction_add',&nbsp;timeout=60.0,&nbsp;check=check)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;asyncio.TimeoutError:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;channel.send('👎')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;channel.send('👍')<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;2.0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``event``&nbsp;parameter&nbsp;is&nbsp;now&nbsp;positional-only.<br>
+&nbsp;<br>
+&nbsp;<br>
+Parameters<br>
+------------<br>
+event:&nbsp;:class:`str`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;event&nbsp;name,&nbsp;similar&nbsp;to&nbsp;the&nbsp;:ref:`event&nbsp;reference&nbsp;&lt;discord-api-events&gt;`,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;without&nbsp;the&nbsp;``on_``&nbsp;prefix,&nbsp;to&nbsp;wait&nbsp;for.<br>
+check:&nbsp;Optional[Callable[...,&nbsp;:class:`bool`]]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;predicate&nbsp;to&nbsp;check&nbsp;what&nbsp;to&nbsp;wait&nbsp;for.&nbsp;The&nbsp;arguments&nbsp;must&nbsp;meet&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters&nbsp;of&nbsp;the&nbsp;event&nbsp;being&nbsp;waited&nbsp;for.<br>
+timeout:&nbsp;Optional[:class:`float`]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;before&nbsp;timing&nbsp;out&nbsp;and&nbsp;raising<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:exc:`asyncio.TimeoutError`.<br>
+&nbsp;<br>
+Raises<br>
+-------<br>
+asyncio.TimeoutError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;a&nbsp;timeout&nbsp;is&nbsp;provided&nbsp;and&nbsp;it&nbsp;was&nbsp;reached.<br>
+&nbsp;<br>
+Returns<br>
+--------<br>
+Any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns&nbsp;no&nbsp;arguments,&nbsp;a&nbsp;single&nbsp;argument,&nbsp;or&nbsp;a&nbsp;:class:`tuple`&nbsp;of&nbsp;multiple<br>
+&nbsp;&nbsp;&nbsp;&nbsp;arguments&nbsp;that&nbsp;mirrors&nbsp;the&nbsp;parameters&nbsp;passed&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:ref:`event&nbsp;reference&nbsp;&lt;discord-api-events&gt;`.</tt></dd></dl>
+
+<dl><dt>async <a name="Client-wait_until_ready"><strong>wait_until_ready</strong></a>(self) -&gt; 'None'</dt><dd><tt>|coro|<br>
+&nbsp;<br>
+Waits&nbsp;until&nbsp;the&nbsp;client's&nbsp;internal&nbsp;cache&nbsp;is&nbsp;all&nbsp;ready.<br>
+&nbsp;<br>
+..&nbsp;warning::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Calling&nbsp;this&nbsp;inside&nbsp;:meth:`setup_hook`&nbsp;can&nbsp;lead&nbsp;to&nbsp;a&nbsp;deadlock.</tt></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="discord.client.html#Client">discord.client.Client</a>:<br>
+<dl><dt><strong>application</strong></dt>
+<dd><tt>Optional[:class:`~discord.AppInfo`]:&nbsp;The&nbsp;client's&nbsp;application&nbsp;info.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;retrieved&nbsp;on&nbsp;:meth:`~discord.Client.login`&nbsp;and&nbsp;is&nbsp;not&nbsp;updated<br>
+afterwards.&nbsp;This&nbsp;allows&nbsp;populating&nbsp;the&nbsp;application_id&nbsp;without&nbsp;requiring&nbsp;a<br>
+gateway&nbsp;connection.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;``None``&nbsp;if&nbsp;accessed&nbsp;before&nbsp;:meth:`~discord.Client.login`&nbsp;is&nbsp;called.<br>
+&nbsp;<br>
+..&nbsp;seealso::&nbsp;The&nbsp;:meth:`~discord.Client.application_info`&nbsp;API&nbsp;call<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0</tt></dd>
+</dl>
+<dl><dt><strong>application_flags</strong></dt>
+<dd><tt>:class:`~discord.ApplicationFlags`:&nbsp;The&nbsp;client's&nbsp;application&nbsp;flags.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0</tt></dd>
+</dl>
+<dl><dt><strong>application_id</strong></dt>
+<dd><tt>Optional[:class:`int`]:&nbsp;The&nbsp;client's&nbsp;application&nbsp;ID.<br>
+&nbsp;<br>
+If&nbsp;this&nbsp;is&nbsp;not&nbsp;passed&nbsp;via&nbsp;``__init__``&nbsp;then&nbsp;this&nbsp;is&nbsp;retrieved<br>
+through&nbsp;the&nbsp;gateway&nbsp;when&nbsp;an&nbsp;event&nbsp;contains&nbsp;the&nbsp;data&nbsp;or&nbsp;after&nbsp;a&nbsp;call<br>
+to&nbsp;:meth:`~discord.Client.login`.&nbsp;Usually&nbsp;after&nbsp;:func:`~discord.on_connect`<br>
+is&nbsp;called.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0</tt></dd>
+</dl>
+<dl><dt><strong>cached_messages</strong></dt>
+<dd><tt>Sequence[:class:`.Message`]:&nbsp;Read-only&nbsp;list&nbsp;of&nbsp;messages&nbsp;the&nbsp;connected&nbsp;client&nbsp;has&nbsp;cached.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;1.1</tt></dd>
+</dl>
+<dl><dt><strong>emojis</strong></dt>
+<dd><tt>Sequence[:class:`.Emoji`]:&nbsp;The&nbsp;emojis&nbsp;that&nbsp;the&nbsp;connected&nbsp;client&nbsp;has.</tt></dd>
+</dl>
+<dl><dt><strong>guilds</strong></dt>
+<dd><tt>Sequence[:class:`.Guild`]:&nbsp;The&nbsp;guilds&nbsp;that&nbsp;the&nbsp;connected&nbsp;client&nbsp;is&nbsp;a&nbsp;member&nbsp;of.</tt></dd>
+</dl>
+<dl><dt><strong>intents</strong></dt>
+<dd><tt>:class:`~discord.Intents`:&nbsp;The&nbsp;intents&nbsp;configured&nbsp;for&nbsp;this&nbsp;connection.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;1.5</tt></dd>
+</dl>
+<dl><dt><strong>latency</strong></dt>
+<dd><tt>:class:`float`:&nbsp;Measures&nbsp;latency&nbsp;between&nbsp;a&nbsp;HEARTBEAT&nbsp;and&nbsp;a&nbsp;HEARTBEAT_ACK&nbsp;in&nbsp;seconds.<br>
+&nbsp;<br>
+This&nbsp;could&nbsp;be&nbsp;referred&nbsp;to&nbsp;as&nbsp;the&nbsp;Discord&nbsp;WebSocket&nbsp;protocol&nbsp;latency.</tt></dd>
+</dl>
+<dl><dt><strong>persistent_views</strong></dt>
+<dd><tt>Sequence[:class:`.View`]:&nbsp;A&nbsp;sequence&nbsp;of&nbsp;persistent&nbsp;views&nbsp;added&nbsp;to&nbsp;the&nbsp;client.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0</tt></dd>
+</dl>
+<dl><dt><strong>private_channels</strong></dt>
+<dd><tt>Sequence[:class:`.abc.PrivateChannel`]:&nbsp;The&nbsp;private&nbsp;channels&nbsp;that&nbsp;the&nbsp;connected&nbsp;client&nbsp;is&nbsp;participating&nbsp;on.<br>
+&nbsp;<br>
+..&nbsp;note::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;returns&nbsp;only&nbsp;up&nbsp;to&nbsp;128&nbsp;most&nbsp;recent&nbsp;private&nbsp;channels&nbsp;due&nbsp;to&nbsp;an&nbsp;internal&nbsp;working<br>
+&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;how&nbsp;Discord&nbsp;deals&nbsp;with&nbsp;private&nbsp;channels.</tt></dd>
+</dl>
+<dl><dt><strong>stickers</strong></dt>
+<dd><tt>Sequence[:class:`.GuildSticker`]:&nbsp;The&nbsp;stickers&nbsp;that&nbsp;the&nbsp;connected&nbsp;client&nbsp;has.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;2.0</tt></dd>
+</dl>
+<dl><dt><strong>user</strong></dt>
+<dd><tt>Optional[:class:`.ClientUser`]:&nbsp;Represents&nbsp;the&nbsp;connected&nbsp;client.&nbsp;``None``&nbsp;if&nbsp;not&nbsp;logged&nbsp;in.</tt></dd>
+</dl>
+<dl><dt><strong>users</strong></dt>
+<dd><tt>List[:class:`~discord.User`]:&nbsp;Returns&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;the&nbsp;users&nbsp;the&nbsp;bot&nbsp;can&nbsp;see.</tt></dd>
+</dl>
+<dl><dt><strong>voice_clients</strong></dt>
+<dd><tt>List[:class:`.VoiceProtocol`]:&nbsp;Represents&nbsp;a&nbsp;list&nbsp;of&nbsp;voice&nbsp;connections.<br>
+&nbsp;<br>
+These&nbsp;are&nbsp;usually&nbsp;:class:`.VoiceClient`&nbsp;instances.</tt></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="discord.client.html#Client">discord.client.Client</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>activity</strong></dt>
+<dd><tt>Optional[:class:`.BaseActivity`]:&nbsp;The&nbsp;activity&nbsp;being&nbsp;used&nbsp;upon<br>
+logging&nbsp;in.</tt></dd>
+</dl>
+<dl><dt><strong>allowed_mentions</strong></dt>
+<dd><tt>Optional[:class:`~discord.AllowedMentions`]:&nbsp;The&nbsp;allowed&nbsp;mention&nbsp;configuration.<br>
+&nbsp;<br>
+..&nbsp;versionadded::&nbsp;1.4</tt></dd>
+</dl>
+<dl><dt><strong>status</strong></dt>
+<dd><tt>:class:`.Status`:<br>
+The&nbsp;status&nbsp;being&nbsp;used&nbsp;upon&nbsp;logging&nbsp;on&nbsp;to&nbsp;Discord.<br>
+&nbsp;<br>
+..&nbsp;versionadded:&nbsp;2.0</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Guild">class <strong>Guild</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Guild">Guild</a>(guild_id,&nbsp;guild_chatbot)<br>
+&nbsp;<br>
+<a href="#Guild">Guild</a>&nbsp;class&nbsp;used&nbsp;to&nbsp;store&nbsp;relevant&nbsp;data&nbsp;for&nbsp;each&nbsp;discord&nbsp;guild<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Guild-__init__"><strong>__init__</strong></a>(self, guild_id, guild_chatbot)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-chunkify"><strong>chunkify</strong></a>(response: str) -&gt; list</dt><dd><tt>Break&nbsp;a&nbsp;response&nbsp;into&nbsp;1900&nbsp;character&nbsp;or&nbsp;fewer&nbsp;chunks<br>
+&nbsp;<br>
+Keyword&nbsp;arguments:<br>
+response&nbsp;--&nbsp;the&nbsp;message&nbsp;needing&nbsp;chunked</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>client</strong> = &lt;src.client.Client object&gt;<br>
+<strong>logger</strong> = &lt;Logger src.client (INFO)&gt;</td></tr></table>
+</body></html>
